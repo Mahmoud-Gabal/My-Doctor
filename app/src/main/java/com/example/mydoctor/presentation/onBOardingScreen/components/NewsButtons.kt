@@ -29,7 +29,7 @@ fun NewsButton(
             containerColor = colorResource(id = R.color.ButtonColor),
             contentColor = Color.White
         ),
-        shape = RoundedCornerShape(size = 6.dp),
+        shape = RoundedCornerShape(size = 16.dp),
         modifier = modifier
     ) {
         Text(
@@ -45,7 +45,7 @@ fun NewsTextButton(
     text  :String,
     onClick : () -> Unit
 ) {
-    TextButton(onClick = onClick,modifier = modifier) {
+    TextButton(onClick = onClick,modifier = modifier,shape = RoundedCornerShape(size = 16.dp)) {
         Text(
             text = text,
             style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
