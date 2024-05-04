@@ -130,7 +130,7 @@ fun OnBoardingScreen(
                         scope.launch {
                             if (pagerState.currentPage == 2){
 //                        TODO: navigate to home screen
-                                pagerState.animateScrollToPage(page = pagerState.initialPage)
+                                pagerState.animateScrollToPage(page = 0)
 
                             }else{
                                 pagerState.animateScrollToPage(page = pagerState.currentPage +1)

@@ -1,18 +1,29 @@
 package com.example.mydoctor.presentation.SignInScreen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -32,6 +43,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -81,7 +94,8 @@ fun signInScreen(
         Column(
             modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 20.dp))
+                .padding(horizontal = 20.dp, vertical = 20.dp)
+        )
         {
             Text(modifier = Modifier.padding(vertical = 3.dp),
                 text = "Username or Email",
@@ -93,6 +107,7 @@ fun signInScreen(
                 onValueChange = { email = it },
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(60.dp)
                     .clip(RoundedCornerShape(25.dp)),
 
                 colors = TextFieldDefaults.colors(
@@ -105,6 +120,86 @@ fun signInScreen(
                 ),
                 trailingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription =null )}
             )
+            Spacer(modifier = Modifier.height(30.dp))
+            Text(modifier = Modifier.padding(vertical = 3.dp),
+                text = "Password",
+                fontWeight = FontWeight.SemiBold
+            )
+            var password by remember { mutableStateOf("") }
+            var showPassword by remember { mutableStateOf(false) }
+            TextField(
+                value = password,
+                onValueChange = { password = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .clip(RoundedCornerShape(25.dp)),
+
+                colors = TextFieldDefaults.colors(
+                    errorIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedContainerColor = colorResource(id = R.color.focusedtextField),
+                    unfocusedContainerColor = colorResource(id = R.color.textField),
+                    errorContainerColor = colorResource(id = R.color.errortextField)
+                ),
+                visualTransformation = if (showPassword) {
+                    VisualTransformation.None
+                } else {
+                    PasswordVisualTransformation()
+                }, trailingIcon = {
+                    if (showPassword) {
+                        IconButton(onClick = { showPassword = false }) {
+                            Icon(imageVector = Icons.Filled.Visibility,contentDescription = null)
+                        }
+                    } else {
+                        IconButton(onClick = { showPassword = true }) {
+                            Icon(imageVector = Icons.Filled.VisibilityOff,contentDescription = null)
+                        }
+                    }
+                }
+            )
+            Text(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 3.dp),
+                text = "Forgot password?",
+                textAlign = TextAlign.End,
+                fontWeight = FontWeight.SemiBold
+            )
+            Spacer(modifier = Modifier.height(48.dp))
+            Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .clip(RoundedCornerShape(25.dp)),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.ButtonColor),
+                    contentColor = Color.White
+                )
+            ) {
+                Text(text = "Sign in", fontSize = 18.sp)
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 5.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(text = "Have no account?")
+                Text(
+                    text = "sign up",
+                    fontWeight = FontWeight.SemiBold,
+                    color = colorResource(id = R.color.ButtonColor),
+                    modifier = Modifier.clickable(enabled = true){ /*TODO*/ }
+                )
+            }
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = "Need help?",
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.SemiBold
+            )
+
         }
     }
 }
