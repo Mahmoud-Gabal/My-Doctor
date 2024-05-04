@@ -69,7 +69,7 @@ fun signUpScreen(
         Text(text = "My Doctor", fontWeight = FontWeight.Bold)
         Column(modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 30.dp)) {
+            .padding(vertical = 20.dp)) {
             Text(
                 text = "Sign up",
                 fontWeight = FontWeight.Bold,
