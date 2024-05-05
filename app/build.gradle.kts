@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.dagger.hilt.android")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -66,7 +68,15 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+//    splash api
     implementation ("androidx.core:core-splashscreen:1.0.1")
+//    for additional icons like visibility
     implementation ("androidx.compose.material:material-icons-extended:1.6.7" )
+//    preferences-datastore
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
+
+//    DaggerHilt
+    implementation ("com.google.dagger:hilt-android:2.51")
+    ksp ("com.google.dagger:hilt-compiler:2.51")
+
 }
