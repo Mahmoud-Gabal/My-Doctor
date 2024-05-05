@@ -53,7 +53,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun OnBoardingScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEvent : (onBoardingEvents) -> Unit
 ) {
     Box(modifier = modifier.fillMaxSize()){
         Image(
@@ -129,9 +130,7 @@ fun OnBoardingScreen(
                         .height(60.dp),text = buttonState.value[1]) {
                         scope.launch {
                             if (pagerState.currentPage == 2){
-//                        TODO: navigate to home screen
-                                pagerState.animateScrollToPage(page = 0)
-
+                                onEvent(onBoardingEvents.saveAppEntry)
                             }else{
                                 pagerState.animateScrollToPage(page = pagerState.currentPage +1)
                             }
@@ -153,7 +152,7 @@ fun BoardingPreview() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ){
-            OnBoardingScreen()
+//            OnBoardingScreen()
         }
     }
 }
