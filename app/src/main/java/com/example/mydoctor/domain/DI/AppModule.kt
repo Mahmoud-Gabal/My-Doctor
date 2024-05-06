@@ -8,9 +8,12 @@ import com.example.mydoctor.domain.local.manager.useCases.ReadAppEntry
 import com.example.mydoctor.domain.local.manager.useCases.SaveAppEntry
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
+@InstallIn(SingletonComponent::class)
 object AppModule {
 
 
