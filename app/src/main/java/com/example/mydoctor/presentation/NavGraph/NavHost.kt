@@ -5,13 +5,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import androidx.navigation.navigation
+import com.example.mydoctor.presentation.ForgotPassword.forgotPasswordScreen
+import com.example.mydoctor.presentation.HomeScreen.homeScreen
 import com.example.mydoctor.presentation.SignInScreen.signInScreen
 import com.example.mydoctor.presentation.SignUpScreen.signUpScreen
-import com.example.mydoctor.presentation.ViewModels.MainViewModel
 import com.example.mydoctor.presentation.onBOardingScreen.OnBoardingScreen
-import com.example.mydoctor.presentation.onBOardingScreen.onBoardingEvents
 import com.example.mydoctor.presentation.onBOardingScreen.onBoardingViewModel
 
 @Composable
@@ -30,13 +29,20 @@ fun NavGraph(
 
          navigation(route = Routes.App_Start_Signing.route,startDestination = Routes.signIn.route){
              composable(route = Routes.signIn.route){
-                 signInScreen()
+                 signInScreen(navController = navController)
              }
 
              composable(route = Routes.SignUp.route){
-                 signUpScreen()
+                 signUpScreen(navController = navController)
+             }
+             composable(route = Routes.ForgotPassword.route){
+                 forgotPasswordScreen(navController = navController)
              }
          }
-
+         navigation(route = Routes.App_Home.route, startDestination =Routes.HomeScreen.route ){
+             composable(route = Routes.HomeScreen.route){
+                 homeScreen(navController = navController)
+             }
+         }
      }
 }

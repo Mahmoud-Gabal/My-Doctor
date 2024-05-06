@@ -42,6 +42,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -49,14 +51,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.mydoctor.R
+import com.example.mydoctor.presentation.NavGraph.HyperlinkText
+import com.example.mydoctor.presentation.NavGraph.Routes
 import com.example.mydoctor.presentation.onBOardingScreen.OnBoardingScreen
 import com.example.mydoctor.ui.theme.MyDoctorTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun signInScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController  : NavHostController
 ) {
     Column (
         modifier = modifier
@@ -116,7 +122,6 @@ fun signInScreen(
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedContainerColor = colorResource(id = R.color.focusedtextField),
                     unfocusedContainerColor = colorResource(id = R.color.textField),
-                    errorContainerColor = colorResource(id = R.color.errortextField)
                 ),
                 trailingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription =null )}
             )
@@ -140,8 +145,7 @@ fun signInScreen(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
                     focusedContainerColor = colorResource(id = R.color.focusedtextField),
-                    unfocusedContainerColor = colorResource(id = R.color.textField),
-                    errorContainerColor = colorResource(id = R.color.errortextField)
+                    unfocusedContainerColor = colorResource(id = R.color.textField)
                 ),
                 visualTransformation = if (showPassword) {
                     VisualTransformation.None
@@ -160,14 +164,18 @@ fun signInScreen(
                 }
             )
             Text(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 3.dp),
+                modifier = Modifier.align(Alignment.End)
+                    .padding(vertical = 3.dp)
+                    .clickable(enabled = true){
+                          navController.navigate(Routes.ForgotPassword.route)
+                    },
                 text = "Forgot password?",
                 textAlign = TextAlign.End,
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.height(48.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(Routes.App_Home.route)},
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp)
@@ -190,14 +198,22 @@ fun signInScreen(
                     text = "sign up",
                     fontWeight = FontWeight.SemiBold,
                     color = colorResource(id = R.color.ButtonColor),
-                    modifier = Modifier.clickable(enabled = true){ /*TODO*/ }
+                    modifier = Modifier.clickable(enabled = true){
+                        navController.navigate(Routes.SignUp.route)
+                    }
                 )
             }
-            Text(
+            HyperlinkText(
                 modifier = Modifier.fillMaxWidth(),
-                text = "Need help?",
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.SemiBold
+                fullText = "Need help?",
+                hyperLinks = mutableMapOf(
+                    "Need help?" to "https://dribbble.com/shots/16482360-Sehat-kan-Mobile-Apps/attachments/11304571?mode=media"
+                ),
+                textStyle = TextStyle(
+                    textAlign = TextAlign.Center,
+                ),
+                linkTextFontWeight = FontWeight.SemiBold,
+                linkTextColor = Color.Unspecified
             )
 
         }
@@ -212,7 +228,7 @@ fun signInScreenPreview(){
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            signInScreen()
+//            signInScreen()
         }
     }
 }

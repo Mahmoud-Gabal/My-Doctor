@@ -9,5 +9,8 @@ sealed class Routes(
 
     object signIn : Routes("SignIn")
     object SignUp : Routes("SignUp")
+    object ForgotPassword : Routes("Forgot_Password")
+    object App_Home : Routes("App_Home")
+    object HomeScreen : Routes("HomeScreen")
 
 }
