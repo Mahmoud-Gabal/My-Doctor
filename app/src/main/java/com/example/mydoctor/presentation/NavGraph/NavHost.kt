@@ -6,6 +6,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.mydoctor.presentation.EmailCreatedScreen.createdEmailScreen
 import com.example.mydoctor.presentation.ForgotPassword.forgotPasswordScreen
 import com.example.mydoctor.presentation.HomeScreen.homeScreen
 import com.example.mydoctor.presentation.SignInScreen.signInScreen
@@ -37,6 +38,9 @@ fun NavGraph(
              }
              composable(route = Routes.ForgotPassword.route){
                  forgotPasswordScreen(navController = navController)
+             }
+             composable(route = Routes.CreatedEmailSuccessfully.route){
+                 createdEmailScreen(navController = navController)
              }
          }
          navigation(route = Routes.App_Home.route, startDestination =Routes.HomeScreen.route ){
