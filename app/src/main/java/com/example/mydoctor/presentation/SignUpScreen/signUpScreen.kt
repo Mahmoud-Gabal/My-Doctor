@@ -1,5 +1,6 @@
 package com.example.mydoctor.presentation.SignUpScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -51,12 +53,15 @@ import com.example.mydoctor.presentation.NavGraph.HyperlinkText
 import com.example.mydoctor.presentation.NavGraph.Routes
 import com.example.mydoctor.presentation.SignInScreen.signInScreen
 import com.example.mydoctor.ui.theme.MyDoctorTheme
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun signUpScreen(
     modifier: Modifier = Modifier,
     navController  : NavHostController
 ) {
+    val context = LocalContext.current
     Column (
         modifier = modifier
             .fillMaxSize()
@@ -197,7 +202,25 @@ fun signUpScreen(
             )
             Spacer(modifier = Modifier.height(30.dp))
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                          if (email.isNotEmpty()&&password.isNotEmpty()&&rePassword.isNotEmpty()){
+                              if (password == rePassword){
+                                  FirebaseAuth.getInstance()
+                                      .createUserWithEmailAndPassword(email,password)
+                                      .addOnCompleteListener {
+                                          if (it.isSuccessful){
+                                              navController.navigate(Routes.CreatedEmailSuccessfully.route)
+                                          }else{
+                                              Toast.makeText(context, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                                          }
+                                      }
+                              }else{
+                                  Toast.makeText(context, "Password is not matching!", Toast.LENGTH_SHORT).show()
+                              }
+                          }else{
+                              Toast.makeText(context, "Empty fields are not allowed!", Toast.LENGTH_SHORT).show()
+                          }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp)

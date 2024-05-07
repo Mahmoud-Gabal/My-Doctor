@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+    alias(libs.plugins.googleGmsGoogleServices)
 }
 
 android {
@@ -61,6 +62,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -85,6 +87,24 @@ dependencies {
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     //Compose Navigation
-    implementation ("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
 
-}
+
+
+    // Import the Firebase BoM
+//    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
+//
+//    // When using the BoM, you don't specify versions in Firebase library dependencies
+//
+//    // Add the dependency for the Firebase SDK for Google Analytics
+//    implementation("com.google.firebase:firebase-analytics")
+//
+//    // TODO: Add the dependencies for any other Firebase products you want to use
+//    // See https://firebase.google.com/docs/android/setup#available-libraries
+//    // For example, add the dependencies for Firebase Authentication and Cloud Firestore
+//    implementation("com.google.firebase:firebase-auth:23.0.0")
+//    implementation("com.google.android.gms:play-services-auth:21.1.1")
+//    implementation("com.google.firebase:firebase-firestore")
+//
+//
+ }

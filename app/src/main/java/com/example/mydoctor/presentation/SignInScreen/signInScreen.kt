@@ -1,5 +1,6 @@
 package com.example.mydoctor.presentation.SignInScreen
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -40,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -57,6 +59,7 @@ import com.example.mydoctor.presentation.NavGraph.HyperlinkText
 import com.example.mydoctor.presentation.NavGraph.Routes
 import com.example.mydoctor.presentation.onBOardingScreen.OnBoardingScreen
 import com.example.mydoctor.ui.theme.MyDoctorTheme
+import com.google.firebase.auth.FirebaseAuth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,6 +67,7 @@ fun signInScreen(
     modifier: Modifier = Modifier,
     navController  : NavHostController
 ) {
+    val context = LocalContext.current
     Column (
         modifier = modifier
             .fillMaxSize()
@@ -175,7 +179,22 @@ fun signInScreen(
             )
             Spacer(modifier = Modifier.height(48.dp))
             Button(
-                onClick = { navController.navigate(Routes.App_Home.route)},
+                onClick = {
+                    if (email.isNotEmpty()&&password.isNotEmpty()){
+                            FirebaseAuth.getInstance()
+                                .signInWithEmailAndPassword(email,password)
+                                .addOnCompleteListener {
+                                    if (it.isSuccessful){
+                                        navController.navigate(Routes.App_Home.route)
+                                    }else{
+                                        Toast.makeText(context, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                    }else{
+                        Toast.makeText(context, "Empty fields are not allowed!", Toast.LENGTH_SHORT).show()
+                    }
+
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp)
