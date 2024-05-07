@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mydoctor.domain.local.manager.useCases.AppEntryCases
 import com.example.mydoctor.presentation.NavGraph.Routes
+import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
@@ -25,7 +26,7 @@ class MainViewModel @Inject constructor(
     init {
         appEntryCases.readAppEntry().onEach { shouldStartFromHomeScreen ->
             if(shouldStartFromHomeScreen){
-                _startDestination.value = Routes.App_Start_Signing.route
+                _startDestination.value = if (FirebaseAuth.getInstance().currentUser !=null) Routes.App_Home.route else Routes.App_Start_Signing.route
             }else{
                 _startDestination.value = Routes.App_OnBoard.route
             }

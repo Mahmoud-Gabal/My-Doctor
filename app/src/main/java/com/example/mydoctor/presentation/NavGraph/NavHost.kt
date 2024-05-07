@@ -13,6 +13,7 @@ import com.example.mydoctor.presentation.SignInScreen.signInScreen
 import com.example.mydoctor.presentation.SignUpScreen.signUpScreen
 import com.example.mydoctor.presentation.onBOardingScreen.OnBoardingScreen
 import com.example.mydoctor.presentation.onBOardingScreen.onBoardingViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun NavGraph(

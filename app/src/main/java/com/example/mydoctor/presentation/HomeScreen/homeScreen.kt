@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.mydoctor.presentation.NavGraph.Routes
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun homeScreen(
@@ -24,7 +25,10 @@ fun homeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(text = "Home Screen !!", modifier = Modifier.padding(16.dp))
-        Button(onClick = { navController.navigate(Routes.signIn.route)}) {
+        Button(onClick = {
+            FirebaseAuth.getInstance().signOut()
+            navController.navigate(Routes.signIn.route)
+        }) {
             Text(text = "Back to login")
         }
     }

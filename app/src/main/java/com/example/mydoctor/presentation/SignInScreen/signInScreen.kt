@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -50,6 +51,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -104,7 +106,7 @@ fun signInScreen(
         Column(
             modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 20.dp)
+                .padding(horizontal = 20.dp, vertical = 10.dp)
         )
         {
             Text(modifier = Modifier.padding(vertical = 3.dp),
@@ -129,7 +131,7 @@ fun signInScreen(
                 ),
                 trailingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription =null )}
             )
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             Text(modifier = Modifier.padding(vertical = 3.dp),
                 text = "Password",
                 fontWeight = FontWeight.SemiBold
@@ -168,16 +170,17 @@ fun signInScreen(
                 }
             )
             Text(
-                modifier = Modifier.align(Alignment.End)
+                modifier = Modifier
+                    .align(Alignment.End)
                     .padding(vertical = 3.dp)
-                    .clickable(enabled = true){
+                    .clickable(enabled = true) {
                           navController.navigate(Routes.ForgotPassword.route)
                     },
                 text = "Forgot password?",
                 textAlign = TextAlign.End,
                 fontWeight = FontWeight.SemiBold
             )
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(30.dp))
             Button(
                 onClick = {
                     if (email.isNotEmpty()&&password.isNotEmpty()){
@@ -206,6 +209,28 @@ fun signInScreen(
             ) {
                 Text(text = "Sign in", fontSize = 18.sp)
             }
+            Spacer(modifier = Modifier.height(10.dp))
+            Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .clip(RoundedCornerShape(25.dp)),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.ButtonColor),
+                    contentColor = Color.White
+                )
+            ) {
+                Row(modifier = Modifier.fillMaxSize(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center) {
+                    Text(text = "Sign in with  ", fontSize = 18.sp)
+                    Icon(
+                        painter = painterResource(id = R.drawable.google),
+                        contentDescription = null
+                    )
+                }
+            }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -232,7 +257,8 @@ fun signInScreen(
                     textAlign = TextAlign.Center,
                 ),
                 linkTextFontWeight = FontWeight.SemiBold,
-                linkTextColor = Color.Unspecified
+                linkTextColor = Color.Unspecified,
+                linkTextDecoration = TextDecoration.Underline
             )
 
         }
