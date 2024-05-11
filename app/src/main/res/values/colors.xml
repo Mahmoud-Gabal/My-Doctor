@@ -12,7 +12,9 @@
     <color name="errortextField">#E4F18C8C</color>
     <color name="focusedtextField">#D77CD5FF</color>
     <color name="splashText">#CCCED3</color>
+    <color name="unSelecteditemColor">#F1F1F1</color>
+    <color name="blueGrey">#CCCED3</color>
     <color name="ButtonColor">#130530</color>
     <color name="unSelected">#afcace</color>
-
+    <color name="itemColor">#D77CD5FF</color>
 </resources>

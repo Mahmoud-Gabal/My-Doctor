@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -39,6 +40,11 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Logout
+import androidx.compose.material.icons.rounded.Logout
+import androidx.compose.material.icons.sharp.Home
+import androidx.compose.material.icons.sharp.Logout
 import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -47,7 +53,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
+import androidx.compose.material3.NavigationDrawerItemColors
 import androidx.compose.material3.NavigationDrawerItemDefaults
+import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -99,13 +107,17 @@ fun homeScreen(
     var onSelectedIndex by rememberSaveable() {
         mutableStateOf(0)
     }
-    val listofItems = listOf(0, 1, 2,3)
+    val listofItems = (1..13).toList()
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
-                Row (modifier = Modifier.fillMaxWidth()
-                    .padding(NavigationDrawerItemDefaults.ItemPadding)
-                    .padding(vertical = 20.dp),
+                Row (modifier = Modifier
+                    .fillMaxWidth()
+//                    .padding(NavigationDrawerItemDefaults.ItemPadding)
+                    .padding(vertical = 6.dp, horizontal = 6.dp)
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(colorResource(id = R.color.blueGrey))
+                    .padding(vertical = 22.dp, horizontal = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ){
                     if(userData?.profilePictureUrl != null) {
@@ -141,68 +153,287 @@ fun homeScreen(
                         )
                     }
                 }
-                NavigationDrawerItem(
-                    label = { Text(text = "Home") },
-                    selected = listofItems[0] == onSelectedIndex,
-                    icon = {
-                        Icon(
-                            imageVector = if (listofItems[0] != onSelectedIndex) Icons.Default.Home else Icons.Filled.Home,
-                            contentDescription = null
-                        )
-                    },
-                    onClick = {
-                        onSelectedIndex = listofItems[0]
+                LazyColumn {
+                    item {
+                        NavigationDrawerItem(
+                            label = { Text(text = "Oculist/Ophthalmologist") },
+                            selected = listofItems[0] == onSelectedIndex,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ophthalmology),
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onSelectedIndex = listofItems[0]
 
-                    },
-                    badge = { Text(text = "50") },
-                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-                )
-                NavigationDrawerItem(
-                    label = { Text(text = "Home") },
-                    selected = listofItems[1] == onSelectedIndex,
-                    icon = {
-                        Icon(
-                            imageVector = if (listofItems[1] != onSelectedIndex) Icons.Default.Home else Icons.Filled.Home,
-                            contentDescription = null
+                            },
+                            badge = { Text(text = "50") },
+                            modifier = Modifier
+                                .padding(NavigationDrawerItemDefaults.ItemPadding)
+                                .padding(vertical = 3.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = colorResource(id = R.color.itemColor),
+                                unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+                            )
                         )
-                    },
-                    onClick = {
-                        onSelectedIndex = listofItems[1]
+                        NavigationDrawerItem(
+                            label = { Text(text = "Cardiologist") },
+                            selected = listofItems[1] == onSelectedIndex,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.heart),
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onSelectedIndex = listofItems[1]
 
-                    },
-                    badge = { Text(text = "50") },
-                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-                )
-                NavigationDrawerItem(
-                    label = { Text(text = "Profile") },
-                    selected = listofItems[2] == onSelectedIndex,
-                    icon = {
-                        Icon(
-                            imageVector = if (listofItems[2] != onSelectedIndex) Icons.Default.Person else Icons.Filled.Person,
-                            contentDescription = null
+                            },
+                            badge = { Text(text = "50") },
+                            modifier = Modifier
+                                .padding(NavigationDrawerItemDefaults.ItemPadding)
+                                .padding(vertical = 3.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = colorResource(id = R.color.itemColor),
+                                unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+                            )
                         )
-                    },
-                    onClick = {
-                        onSelectedIndex = listofItems[2]
-                    },
-                    badge = { Text(text = "50") },
-                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-                )
-                NavigationDrawerItem(
-                    label = { Text(text = "Settings") },
-                    selected = listofItems[3] == onSelectedIndex,
-                    icon = {
-                        Icon(
-                            imageVector = if (listofItems[3] != onSelectedIndex) Icons.Default.Settings else Icons.Filled.Settings,
-                            contentDescription = null
+                        NavigationDrawerItem(
+                            label = { Text(text = "Psychiatrist") },
+                            selected = listofItems[2] == onSelectedIndex,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.psychiatry),
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onSelectedIndex = listofItems[2]
+                            },
+                            badge = { Text(text = "50") },
+                            modifier = Modifier
+                                .padding(NavigationDrawerItemDefaults.ItemPadding)
+                                .padding(vertical = 3.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = colorResource(id = R.color.itemColor),
+                                unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+                            )
                         )
-                    },
-                    onClick = {
-                        onSelectedIndex = listofItems[3]
-                    },
-                    badge = { Text(text = "50") },
-                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-                )
+                        NavigationDrawerItem(
+                            label = { Text(text = "Rheumatologist") },
+                            selected = listofItems[3] == onSelectedIndex,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.rheumatology),
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onSelectedIndex = listofItems[3]
+                            },
+                            badge = { Text(text = "50") },
+                            modifier = Modifier
+                                .padding(NavigationDrawerItemDefaults.ItemPadding)
+                                .padding(vertical = 3.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = colorResource(id = R.color.itemColor),
+                                unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+                            )
+                        )
+                        NavigationDrawerItem(
+                            label = { Text(text = "Neurologist") },
+                            selected = listofItems[4] == onSelectedIndex,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.brain) ,
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onSelectedIndex = listofItems[4]
+                            },
+                            badge = { Text(text = "50") },
+                            modifier = Modifier
+                                .padding(NavigationDrawerItemDefaults.ItemPadding)
+                                .padding(vertical = 3.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = colorResource(id = R.color.itemColor),
+                                unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+                            )
+                        )
+                        NavigationDrawerItem(
+                            label = { Text(text = "Obstetrician/Gynecologist") },
+                            selected = listofItems[5] == onSelectedIndex,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.maternity),
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onSelectedIndex = listofItems[5]
+                            },
+                            badge = { Text(text = "50") },
+                            modifier = Modifier
+                                .padding(NavigationDrawerItemDefaults.ItemPadding)
+                                .padding(vertical = 3.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = colorResource(id = R.color.itemColor),
+                                unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+                            )
+                        )
+                        NavigationDrawerItem(
+                            label = { Text(text = "Oto.Rhino.Laryngo.logist\n(O.R.L)") },
+                            selected = listofItems[6] == onSelectedIndex,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ear),
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onSelectedIndex = listofItems[6]
+                            },
+                            badge = { Text(text = "50") },
+                            modifier = Modifier
+                                .padding(NavigationDrawerItemDefaults.ItemPadding)
+                                .padding(vertical = 3.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = colorResource(id = R.color.itemColor),
+                                unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+                            )
+                        )
+                        NavigationDrawerItem(
+                            label = { Text(text = "Psychologist") },
+                            selected = listofItems[7] == onSelectedIndex,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.psychology),
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onSelectedIndex = listofItems[7]
+                            },
+                            badge = { Text(text = "50") },
+                            modifier = Modifier
+                                .padding(NavigationDrawerItemDefaults.ItemPadding)
+                                .padding(vertical = 3.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = colorResource(id = R.color.itemColor),
+                                unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+                            )
+                        )
+                        NavigationDrawerItem(
+                            label = { Text(text = "Pediatrician") },
+                            selected = listofItems[8] == onSelectedIndex,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.baby),
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onSelectedIndex = listofItems[8]
+                            },
+                            badge = { Text(text = "50") },
+                            modifier = Modifier
+                                .padding(NavigationDrawerItemDefaults.ItemPadding)
+                                .padding(vertical = 3.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = colorResource(id = R.color.itemColor),
+                                unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+                            )
+                        )
+                        NavigationDrawerItem(
+                            label = { Text(text = "Dermatologiste") },
+                            selected = listofItems[9] == onSelectedIndex,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.dermatology),
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onSelectedIndex = listofItems[9]
+                            },
+                            badge = { Text(text = "50") },
+                            modifier = Modifier
+                                .padding(NavigationDrawerItemDefaults.ItemPadding)
+                                .padding(vertical = 3.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = colorResource(id = R.color.itemColor),
+                                unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+                            )
+                        )
+                        NavigationDrawerItem(
+                            label = { Text(text = "Dentist") },
+                            selected = listofItems[10] == onSelectedIndex,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.dentist),
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onSelectedIndex = listofItems[10]
+                            },
+                            badge = { Text(text = "50") },
+                            modifier = Modifier
+                                .padding(NavigationDrawerItemDefaults.ItemPadding)
+                                .padding(vertical = 3.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = colorResource(id = R.color.itemColor),
+                                unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+                            )
+                        )
+                        NavigationDrawerItem(
+                            label = { Text(text = "Internist") },
+                            selected = listofItems[11] == onSelectedIndex,
+                            icon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.stomach),
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onSelectedIndex = listofItems[11]
+                            },
+                            badge = { Text(text = "50") },
+                            modifier = Modifier
+                                .padding(NavigationDrawerItemDefaults.ItemPadding)
+                                .padding(vertical = 3.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = colorResource(id = R.color.itemColor),
+                                unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+                            )
+                        )
+                        NavigationDrawerItem(
+                            label = { Text(text = "Log out") },
+                            selected = listofItems[12] == onSelectedIndex,
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Outlined.Logout,
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onSelectedIndex = listofItems[12]
+                                onSignOut()
+                                navController.navigate(Routes.signIn.route)
+                            },
+                            badge = { Text(text = "50") },
+                            modifier = Modifier
+                                .padding(NavigationDrawerItemDefaults.ItemPadding)
+                                .padding(vertical = 3.dp),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = colorResource(id = R.color.itemColor),
+                                unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+                            )
+                        )
+                    }
+                }
             }
         },
         drawerState = drawerstate
@@ -250,36 +481,24 @@ fun homeScreen(
             Column(
                 modifier = modifier
                     .fillMaxSize()
-                    .padding(it),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .padding(it)
+                    .padding(horizontal = 20.dp)
             ){
-                if(userData?.profilePictureUrl != null) {
-                    AsyncImage(
-                        model = userData.profilePictureUrl,
-                        contentDescription = "Profile picture",
-                        modifier = Modifier
-                            .size(150.dp)
-                            .clip(CircleShape),
-                        contentScale = ContentScale.Crop
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                }
+                Text(text = "Hello,")
                 if(userData?.username != null) {
                     Text(
                         text = userData.username,
                         textAlign = TextAlign.Center,
-                        fontSize = 36.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
-                }
-                Text(text = "Home Screen !!", modifier = Modifier.padding(16.dp))
-                Button(onClick = {
-                    onSignOut()
-                    navController.navigate(Routes.signIn.route)
-                }) {
-                    Text(text = "Back to login")
+                }else{
+                    Text(
+                        text = "simple user",
+                        textAlign = TextAlign.Center,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
                 }
             }
         }
@@ -407,5 +626,26 @@ fun homePreview(modifier: Modifier = Modifier) {
             }
         }
     }
+}
+
+
+@Composable
+fun navItem
+(
+    modifier: Modifier = Modifier,
+    text : @Composable () -> Unit,
+    Badge : @Composable () -> Unit,
+    selected : Boolean,
+    onClick : () -> Unit,
+    myIcon : @Composable () (() -> Unit)? = null
+) {
+    NavigationDrawerItem(
+        label = text,
+        selected = selected,
+        onClick = onClick,
+        modifier = modifier,
+        badge = Badge,
+        icon = myIcon
+    )
 }
 
