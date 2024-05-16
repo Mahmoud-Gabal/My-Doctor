@@ -43,8 +43,10 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
@@ -52,6 +54,7 @@ import androidx.compose.material.icons.filled.HeartBroken
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Lock
@@ -62,6 +65,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Logout
+import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material.icons.rounded.Logout
 import androidx.compose.material.icons.sharp.Home
 import androidx.compose.material.icons.sharp.Logout
@@ -102,8 +106,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -223,7 +229,8 @@ fun homeScreen(
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
-                        navigationIconContentColor = Color.Black
+                        navigationIconContentColor = Color.Black,
+                        containerColor = Color(236,236,236)
                     ),
                     actions = {
                         if(userData?.profilePictureUrl != null) {
@@ -241,9 +248,11 @@ fun homeScreen(
                                 .clip(RoundedCornerShape(6.dp))
                                 .background(Color.Gray))
                         }
-                    }
+                    },
+
                 )
-            }
+            },
+            containerColor = Color(236,236,236)
         ) {
             Column(
                 modifier = modifier
@@ -277,16 +286,21 @@ fun homeScreen(
                     modifier = Modifier
                         .fillMaxHeight(.32f)
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(23.dp))
-                    ,
+                        .shadow(
+                            elevation = 40.dp,
+                            spotColor = Color.Blue,
+
+                            )
+                        .clip(RoundedCornerShape(23.dp)),
                     contentAlignment = Alignment.CenterStart,
 
-                ){
+                    ){
                     Box(modifier = Modifier
                         .fillMaxSize()
                         .clip(RoundedCornerShape(23.dp))
                         .background(colorResource(id = R.color.splashBackgroundTr))
                         .padding(20.dp)
+
                     ,
                     contentAlignment = Alignment.CenterStart,
 
@@ -338,7 +352,7 @@ fun homeScreen(
                     )
                 }
                 categoryPager()
-
+                topRated()
             }
         }
     }
@@ -528,7 +542,7 @@ fun dropDownMenu() {
 fun categoryPager(modifier: Modifier = Modifier) {
     Column(modifier = modifier
         .fillMaxWidth()
-        .padding(top = 15.dp)) {
+        .padding(top = 25.dp)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -571,18 +585,16 @@ fun categories(modifier: Modifier = Modifier) {
                 mutableStateOf(false)
             }
             val selectedColor = animateColorAsState(
-                targetValue = if (isSelected) Color.Yellow else Color.Transparent)
-            Card(
-//                shape = RoundedCornerShape(18.dp),
+                targetValue = if (isSelected) Color.White else Color.Transparent)
+            Column(
                 modifier = Modifier
                     .height(50.dp)
+                    .clip(RoundedCornerShape(18.dp))
+                    .border(1.dp, Color.LightGray, shape = RoundedCornerShape(18.dp))
+                    .background(selectedColor.value)
+
                     .clickable { isSelected = !isSelected }
-                ,
-                shape = RoundedCornerShape(18.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = selectedColor.value
-                ),
-                border = BorderStroke(1.dp,Color.LightGray)
+
             ) {
                 Row (
                     modifier = Modifier.fillMaxSize(),
@@ -603,6 +615,112 @@ fun categories(modifier: Modifier = Modifier) {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun topRated(
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier
+        .fillMaxWidth()
+        .padding(top = 30.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Text(
+                text = "Top Rated Doctors",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = colorResource(id = R.color.darkBlue)
+            )
+            Text(text = "See all")
+        }
+        topDoctors()
+
+    }
+}
+
+@Composable
+fun topDoctors(
+    modifier: Modifier = Modifier
+) {
+    val topRated = listOf(
+        DoctorInfo("Mahmoud","Dentist",4,40),
+        DoctorInfo("Ahmed","Dentist",3,50),
+        DoctorInfo("Mahmoud","Dentist",2,20),
+        DoctorInfo("Mahmoud","Dentist",4,50),
+        DoctorInfo("Mahmoud","Dentist",4,50),
+        DoctorInfo("Mahmoud","Dentist",4,50),
+    )
+    LazyColumn (
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 15.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        contentPadding = PaddingValues(vertical = 10.dp)
+    ){
+        items(topRated){ doctorInfo ->
+            doctorCard(info = doctorInfo )
+        }
+    }
+}
+
+@Composable
+fun doctorCard(
+    modifier: Modifier = Modifier,
+    info: DoctorInfo
+)
+{
+    var restStars by remember {
+        mutableStateOf(5 - info.stars)
+    }
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(23.dp))
+            .background(Color.White)
+            .padding(12.dp)
+        ,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ){
+        Box(modifier = Modifier
+            .size(67.dp)
+            .clip(RoundedCornerShape(15.dp))
+            .background(Color.Gray))
+        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(text = info.name, fontSize = 16.sp, fontWeight = FontWeight.SemiBold,
+                color = colorResource(id = R.color.darkBlue)
+            )
+            Text(text = info.job, fontSize = 12.sp)
+            Row(modifier = Modifier.padding(top = 5.dp)){
+                for (i in 1..info.stars) {
+                    Icon(
+                        imageVector = Icons.Filled.Star,
+                        contentDescription = null,
+                        tint = Color.Yellow,
+                        modifier = Modifier.size(12.dp)
+                    )
+                }
+                for (i in 1..restStars) {
+                    Icon(
+                        imageVector = Icons.Outlined.StarOutline,
+                        contentDescription = null,
+                        modifier = Modifier.size(12.dp)
+                    )
+                }
+                Text(text = "   ${info.stars}.0" +  "    |    " +"${info.reviews} Reviews",fontSize = 12.sp)
+            }
+        }
+        Icon(
+            painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right_24),
+            contentDescription = null,
+            tint = colorResource(id = R.color.splashBackgroundTr),
+            modifier = Modifier.padding(start = 23.dp).size(30.dp)
+        )
     }
 }
 
