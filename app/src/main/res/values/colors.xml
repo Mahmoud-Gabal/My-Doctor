@@ -2,12 +2,15 @@
 <resources>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
+    <color name="purple_700">#C80000FF</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="splashBackground">#1976D2</color>
+    <color name="splashBackground">#C80000FF</color>
+    <color name="locationBar">#611957D2</color>
+    <color name="searchBar">#1941D2</color>
+    <color name="splashBackgroundTr">#C80000FF</color>
     <color name="textField">#D300AEFF</color>
     <color name="errortextField">#E4F18C8C</color>
     <color name="focusedtextField">#D77CD5FF</color>
@@ -15,6 +18,7 @@
     <color name="unSelecteditemColor">#F1F1F1</color>
     <color name="blueGrey">#CCCED3</color>
     <color name="ButtonColor">#130530</color>
+    <color name="darkBlue">#130530</color>
     <color name="unSelected">#afcace</color>
     <color name="itemColor">#D77CD5FF</color>
 </resources>
