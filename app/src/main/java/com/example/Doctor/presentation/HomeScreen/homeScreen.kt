@@ -96,6 +96,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -254,111 +255,119 @@ fun homeScreen(
             },
             containerColor = Color(236,236,236)
         ) {
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(it)
-                    .padding(horizontal = 20.dp)
-            ){
-                Column(
-                    modifier = Modifier.padding(bottom = 15.dp)
-                ){
-                    Text(text = "Hello,")
-                    if (userData?.username != null) {
-                        Text(
-                            text = userData.username,
-                            textAlign = TextAlign.Center,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = colorResource(id = R.color.darkBlue)
-                        )
-                    } else {
-                        Text(
-                            text = "simple user",
-                            textAlign = TextAlign.Center,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            color = colorResource(id = R.color.darkBlue)
-                        )
-                    }
-                }
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight(.32f)
-                        .fillMaxWidth()
-                        .shadow(
-                            elevation = 40.dp,
-                            spotColor = Color.Blue,
-
-                            )
-                        .clip(RoundedCornerShape(23.dp)),
-                    contentAlignment = Alignment.CenterStart,
-
-                    ){
-                    Box(modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(23.dp))
-                        .background(colorResource(id = R.color.splashBackgroundTr))
-                        .padding(20.dp)
-
-                    ,
-                    contentAlignment = Alignment.CenterStart,
-
-                    ){
-                    Column(modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.SpaceBetween,
-                        horizontalAlignment = Alignment.CenterHorizontally){
-                        dropDownMenu()
-                        var SearchText by rememberSaveable { mutableStateOf("") }
-                        TextField(
-                            value = SearchText,
-                            onValueChange = { SearchText = it },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(50.dp)
-                                .clip(RoundedCornerShape(20.dp)),
-                            placeholder = {
-                                Text("Search", color = colorResource(id = R.color.blueGrey))
-                                          },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Filled.Search,
-                                    contentDescription = null,
-                                    tint = colorResource(id = R.color.blueGrey)
-                                )
-                            },
-                            colors = TextFieldDefaults.colors(
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
-                                errorIndicatorColor = Color.Transparent,
-                                unfocusedContainerColor = colorResource(id = R.color.searchBar),
-                                focusedContainerColor = colorResource(id = R.color.searchBar),
-                                errorContainerColor = colorResource(id = R.color.searchBar),
-                                cursorColor = Color.White,
-                                errorCursorColor = Color.White,
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Color.White,
-                                errorTextColor = Color.White
-                            )
-                        )
-                    }
-
-                }
-                    Text(
-                        text = "Find the doctor nearest to your\nlocation",
-                        fontSize = 21.sp,
-                        color = Color.White,
-                        modifier = Modifier.padding(horizontal = 20.dp)
-                    )
-                }
-                categoryPager()
-                topRated()
-            }
+            basicHomeScreen(paddingValues = it, userData = userData)
         }
     }
 
 }
 
+@Composable
+fun basicHomeScreen(
+    modifier: Modifier = Modifier,
+    paddingValues: PaddingValues,
+    userData: UserData? = null
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+            .padding(horizontal = 20.dp)
+    ){
+        Column(
+            modifier = Modifier.padding(bottom = 15.dp)
+        ){
+            Text(text = "Hello,")
+            if (userData?.username != null) {
+                Text(
+                    text = userData.username,
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = colorResource(id = R.color.darkBlue)
+                )
+            } else {
+                Text(
+                    text = "simple user",
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = colorResource(id = R.color.darkBlue)
+                )
+            }
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxHeight(.32f)
+                .fillMaxWidth()
+                .shadow(
+                    elevation = 40.dp,
+                    spotColor = Color.Blue,
+
+                    )
+                .clip(RoundedCornerShape(23.dp)),
+            contentAlignment = Alignment.CenterStart,
+
+            ){
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(23.dp))
+                .background(colorResource(id = R.color.splashBackgroundTr))
+                .padding(20.dp)
+
+                ,
+                contentAlignment = Alignment.CenterStart,
+
+                ){
+                Column(modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.SpaceBetween,
+                    horizontalAlignment = Alignment.CenterHorizontally){
+                    dropDownMenu()
+                    var SearchText by rememberSaveable { mutableStateOf("") }
+                    TextField(
+                        value = SearchText,
+                        onValueChange = { SearchText = it },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp)
+                            .clip(RoundedCornerShape(20.dp)),
+                        placeholder = {
+                            Text("Search", color = colorResource(id = R.color.blueGrey))
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Filled.Search,
+                                contentDescription = null,
+                                tint = colorResource(id = R.color.blueGrey)
+                            )
+                        },
+                        colors = TextFieldDefaults.colors(
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            errorIndicatorColor = Color.Transparent,
+                            unfocusedContainerColor = colorResource(id = R.color.searchBar),
+                            focusedContainerColor = colorResource(id = R.color.searchBar),
+                            errorContainerColor = colorResource(id = R.color.searchBar),
+                            cursorColor = Color.White,
+                            errorCursorColor = Color.White,
+                            focusedTextColor = Color.White,
+                            unfocusedTextColor = Color.White,
+                            errorTextColor = Color.White
+                        )
+                    )
+                }
+
+            }
+            Text(
+                text = "Find the doctor nearest to your\nlocation",
+                fontSize = 21.sp,
+                color = Color.White,
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
+        }
+        categoryPager()
+        topRated()
+    }
+}
 @Composable
 fun navItem
 (
@@ -419,7 +428,10 @@ fun allNavItems(
         navItem(
             label = jobs[i],
             selected = listofItems[i] == onSelectedIndex,
-            onclick = { onSelectedIndex = listofItems[i] },
+            onclick = {
+                onSelectedIndex = listofItems[i]
+                categoryNavigator(navController = navController, i = i)
+            },
             badge = badges[i],
             picId = picIds[i]
         )
@@ -574,47 +586,53 @@ fun categories(modifier: Modifier = Modifier) {
         R.drawable.dermatology,R.drawable.dentist,R.drawable.stomach
     )
 
+    var selectedIndex by rememberSaveable {
+        mutableStateOf(0)
+    }
     LazyRow (
         modifier = modifier
             .fillMaxWidth()
             .padding(top = 15.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ){
-        itemsIndexed(categoryList){ index,item ->
-            var isSelected by remember {
-                mutableStateOf(false)
-            }
-            val selectedColor = animateColorAsState(
-                targetValue = if (isSelected) Color.White else Color.Transparent)
-            Column(
-                modifier = Modifier
-                    .height(50.dp)
-                    .clip(RoundedCornerShape(18.dp))
-                    .border(1.dp, Color.LightGray, shape = RoundedCornerShape(18.dp))
-                    .background(selectedColor.value)
+            itemsIndexed(categoryList){index , item ->
+                var isSelected = index ==selectedIndex
+                val selectedColor =
+                     if (isSelected) Color.White else Color.Transparent
+                Column(
+                    modifier = Modifier
+                        .height(50.dp)
+                        .clip(RoundedCornerShape(18.dp))
+                        .border(1.dp, Color.LightGray, shape = RoundedCornerShape(18.dp))
+                        .background(selectedColor)
+                        .clickable { selectedIndex = index }
 
-                    .clickable { isSelected = !isSelected }
-
-            ) {
-                Row (
-                    modifier = Modifier.fillMaxSize(),
-                    verticalAlignment = Alignment.CenterVertically
-                ){
-                    Icon(
-                        modifier = Modifier.padding(horizontal = 8.dp),
-                        painter = painterResource(iconsOfJobs[index]),
-                        contentDescription = null
-                    )
-                    Text(
-                        text = item,
-                        modifier = Modifier.padding(horizontal = 8.dp),
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 16.sp,
-                        color = colorResource(id = R.color.darkBlue)
-                    )
+                ) {
+                    Row (
+                        modifier = Modifier.fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ){
+                        Icon(
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            painter = painterResource(iconsOfJobs[index]),
+                            contentDescription = null
+                        )
+                        Text(
+                            text = item,
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 16.sp,
+                            color = colorResource(id = R.color.darkBlue)
+                        )
+                    }
                 }
             }
-        }
+
+
+
+
+
+
     }
 }
 
@@ -622,6 +640,14 @@ fun categories(modifier: Modifier = Modifier) {
 fun topRated(
     modifier: Modifier = Modifier
 ) {
+    var toprated = listOf(
+        DoctorInfo("Mahmoud","Dentist",4,50),
+        DoctorInfo("Ahmed","Dentist",4,50),
+        DoctorInfo("Islam","Dentist",4,50),
+        DoctorInfo("Amgd","Dentist",4,50),
+        DoctorInfo("Israa","Dentist",4,50),
+        DoctorInfo("Yasmeen","Dentist",4,50),
+    )
     Column(modifier = modifier
         .fillMaxWidth()
         .padding(top = 30.dp)) {
@@ -638,89 +664,33 @@ fun topRated(
             )
             Text(text = "See all")
         }
-        topDoctors()
-
-    }
-}
-
-@Composable
-fun topDoctors(
-    modifier: Modifier = Modifier
-) {
-    val topRated = listOf(
-        DoctorInfo("Mahmoud","Dentist",4,40),
-        DoctorInfo("Ahmed","Dentist",3,50),
-        DoctorInfo("Mahmoud","Dentist",2,20),
-        DoctorInfo("Mahmoud","Dentist",4,50),
-        DoctorInfo("Mahmoud","Dentist",4,50),
-        DoctorInfo("Mahmoud","Dentist",4,50),
-    )
-    LazyColumn (
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 15.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(vertical = 10.dp)
-    ){
-        items(topRated){ doctorInfo ->
-            doctorCard(info = doctorInfo )
-        }
-    }
-}
-
-@Composable
-fun doctorCard(
-    modifier: Modifier = Modifier,
-    info: DoctorInfo
-)
-{
-    var restStars by remember {
-        mutableStateOf(5 - info.stars)
-    }
-    Row (
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(23.dp))
-            .background(Color.White)
-            .padding(12.dp)
-        ,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
-    ){
-        Box(modifier = Modifier
-            .size(67.dp)
-            .clip(RoundedCornerShape(15.dp))
-            .background(Color.Gray))
-        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(text = info.name, fontSize = 16.sp, fontWeight = FontWeight.SemiBold,
-                color = colorResource(id = R.color.darkBlue)
-            )
-            Text(text = info.job, fontSize = 12.sp)
-            Row(modifier = Modifier.padding(top = 5.dp)){
-                for (i in 1..info.stars) {
-                    Icon(
-                        imageVector = Icons.Filled.Star,
-                        contentDescription = null,
-                        tint = Color.Yellow,
-                        modifier = Modifier.size(12.dp)
-                    )
-                }
-                for (i in 1..restStars) {
-                    Icon(
-                        imageVector = Icons.Outlined.StarOutline,
-                        contentDescription = null,
-                        modifier = Modifier.size(12.dp)
-                    )
-                }
-                Text(text = "   ${info.stars}.0" +  "    |    " +"${info.reviews} Reviews",fontSize = 12.sp)
-            }
-        }
-        Icon(
-            painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right_24),
-            contentDescription = null,
-            tint = colorResource(id = R.color.splashBackgroundTr),
-            modifier = Modifier.padding(start = 23.dp).size(30.dp)
+        topDoctors(
+            topRated = toprated
         )
+
     }
 }
+
+fun categoryNavigator(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    i : Int
+){
+    when(i){
+        0 -> navController.navigate(Routes.OculistsScreen.route)
+        1 -> navController.navigate(Routes.CardiologistsScreen.route)
+        2 -> navController.navigate(Routes.PsychiatristsScreen.route)
+        3 -> navController.navigate(Routes.RheumatologistsScreen.route)
+        4 -> navController.navigate(Routes.NeurologistsScreen.route)
+        5 -> navController.navigate(Routes.ObstetriciansScreen.route)
+        6 -> navController.navigate(Routes.O_R_LsScreen.route)
+        7 -> navController.navigate(Routes.PsychologistsScreen.route)
+        8 -> navController.navigate(Routes.PediatriciansScreen.route)
+        9 -> navController.navigate(Routes.DermatologistesScreen.route)
+        10 -> navController.navigate(Routes.DentistsScreen.route)
+        11 -> navController.navigate(Routes.InternistsScreen.route)
+    }
+}
+
+
 

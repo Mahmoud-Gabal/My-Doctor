@@ -23,8 +23,34 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.Doctor.data.local.doctors.AllDoctorsList
+import com.example.Doctor.data.local.doctors.CardiologistsList
+import com.example.Doctor.data.local.doctors.DentistsList
+import com.example.Doctor.data.local.doctors.DermatologistesList
+import com.example.Doctor.data.local.doctors.InternistsList
+import com.example.Doctor.data.local.doctors.NeurologistsList
+import com.example.Doctor.data.local.doctors.O_R_LsList
+import com.example.Doctor.data.local.doctors.ObstetriciansList
+import com.example.Doctor.data.local.doctors.OculistsList
+import com.example.Doctor.data.local.doctors.PediatriciansList
+import com.example.Doctor.data.local.doctors.PsychiatristsList
+import com.example.Doctor.data.local.doctors.PsychologistsList
+import com.example.Doctor.data.local.doctors.RheumatologistsList
 import com.example.Doctor.presentation.EmailCreatedScreen.createdEmailScreen
 import com.example.Doctor.presentation.ForgotPassword.forgotPasswordScreen
+import com.example.Doctor.presentation.HomeScreen.AllDoctors
+import com.example.Doctor.presentation.HomeScreen.Cardiologists
+import com.example.Doctor.presentation.HomeScreen.Dentists
+import com.example.Doctor.presentation.HomeScreen.Dermatologistes
+import com.example.Doctor.presentation.HomeScreen.Internists
+import com.example.Doctor.presentation.HomeScreen.Neurologists
+import com.example.Doctor.presentation.HomeScreen.O_R_Ls
+import com.example.Doctor.presentation.HomeScreen.Obstetricians
+import com.example.Doctor.presentation.HomeScreen.Oculists
+import com.example.Doctor.presentation.HomeScreen.Pediatricians
+import com.example.Doctor.presentation.HomeScreen.Psychiatrists
+import com.example.Doctor.presentation.HomeScreen.Psychologists
+import com.example.Doctor.presentation.HomeScreen.Rheumatologists
 import com.example.Doctor.presentation.HomeScreen.homeScreen
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.GoogleAuthUiClient
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.SignInViewModel
@@ -134,6 +160,45 @@ fun NavGraph(
                      }
                  )
 
+             }
+             composable(route = Routes.CardiologistsScreen.route){
+                 Cardiologists(doctors = CardiologistsList, navController = navController)
+             }
+             composable(route = Routes.DentistsScreen.route){
+                 Dentists(doctors = DentistsList, navController = navController)
+             }
+             composable(route = Routes.DermatologistesScreen.route){
+                 Dermatologistes(doctors = DermatologistesList, navController = navController)
+             }
+             composable(route = Routes.InternistsScreen.route){
+                 Internists(doctors = InternistsList, navController = navController)
+             }
+             composable(route = Routes.NeurologistsScreen.route){
+                 Neurologists(doctors = NeurologistsList, navController = navController)
+             }
+             composable(route = Routes.O_R_LsScreen.route){
+                 O_R_Ls(doctors = O_R_LsList, navController = navController)
+             }
+             composable(route = Routes.ObstetriciansScreen.route){
+                 Obstetricians(doctors = ObstetriciansList, navController = navController)
+             }
+             composable(route = Routes.OculistsScreen.route){
+                 Oculists(doctors = OculistsList, navController = navController)
+             }
+             composable(route = Routes.PediatriciansScreen.route){
+                 Pediatricians(doctors = PediatriciansList, navController = navController)
+             }
+             composable(route = Routes.PsychiatristsScreen.route){
+                 Psychiatrists(doctors = PsychiatristsList, navController = navController)
+             }
+             composable(route = Routes.PsychologistsScreen.route){
+                 Psychologists(doctors = PsychologistsList , navController = navController)
+             }
+             composable(route = Routes.RheumatologistsScreen.route){
+                 Rheumatologists(doctors = RheumatologistsList, navController = navController)
+             }
+             composable(route = Routes.AllDoctorsScreen.route){
+                 AllDoctors(doctors = AllDoctorsList, navController = navController)
              }
          }
      }
