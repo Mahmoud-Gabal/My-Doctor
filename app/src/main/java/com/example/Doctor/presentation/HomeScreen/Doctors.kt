@@ -85,7 +85,8 @@ fun Oculists(
         LazyColumn (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(it),
+                .padding(it)
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
@@ -132,7 +133,8 @@ fun Cardiologists(
         LazyColumn (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(it),
+                .padding(it)
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
@@ -179,7 +181,8 @@ fun Psychiatrists(
         LazyColumn (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(it),
+                .padding(it)
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
@@ -226,7 +229,8 @@ fun Rheumatologists(
         LazyColumn (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(it),
+                .padding(it)
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
@@ -273,7 +277,8 @@ fun Neurologists(
         LazyColumn (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(it),
+                .padding(it)
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
@@ -320,7 +325,8 @@ fun Obstetricians(
         LazyColumn (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(it),
+                .padding(it)
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
@@ -367,7 +373,8 @@ fun O_R_Ls(
         LazyColumn (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(it),
+                .padding(it)
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
@@ -414,7 +421,8 @@ fun Psychologists(
         LazyColumn (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(it),
+                .padding(it)
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
@@ -461,7 +469,8 @@ fun Pediatricians(
         LazyColumn (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(it),
+                .padding(it)
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
@@ -509,7 +518,8 @@ fun Dermatologistes(
             LazyColumn (
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(it),
+                    .padding(it)
+                    .padding(horizontal = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 contentPadding = PaddingValues(vertical = 10.dp)
             ){
@@ -541,7 +551,7 @@ fun Dentists(
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = null,
-                            modifier = Modifier.padding(horizontal = 10.dp)
+                            modifier = Modifier.padding(horizontal = 10.dp).size(30.dp)
                         )
                     }
                 },
@@ -557,7 +567,8 @@ fun Dentists(
         LazyColumn (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(it),
+                .padding(it)
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
@@ -604,7 +615,8 @@ fun Internists(
         LazyColumn (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(it),
+                .padding(it)
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
@@ -651,7 +663,8 @@ fun AllDoctors(
         LazyColumn (
             modifier = modifier
                 .fillMaxWidth()
-                .padding(it),
+                .padding(it)
+                .padding(horizontal = 20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(vertical = 10.dp)
         ){

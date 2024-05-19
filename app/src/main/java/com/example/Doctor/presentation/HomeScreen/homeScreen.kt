@@ -161,51 +161,58 @@ fun homeScreen(
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet {
-                Row (modifier = Modifier
-                    .fillMaxWidth()
-//                    .padding(NavigationDrawerItemDefaults.ItemPadding)
-                    .padding(vertical = 6.dp, horizontal = 6.dp)
-                    .clip(RoundedCornerShape(20.dp))
-                    .background(colorResource(id = R.color.blueGrey))
-                    .padding(vertical = 22.dp, horizontal = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                Column(
+                    modifier = Modifier.background(Color(236,236,236))
                 ){
-                    if(userData?.profilePictureUrl != null) {
-                        AsyncImage(
-                            model = userData.profilePictureUrl,
-                            contentDescription = "Profile picture",
-                            modifier = Modifier
-                                .size(50.dp)
-                                .clip(RoundedCornerShape(20.dp)),
-                            contentScale = ContentScale.Crop
-                        )
-                    }else{
-                        Box(modifier = Modifier
-                            .size(50.dp)
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(Color.Gray))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+//                    .padding(NavigationDrawerItemDefaults.ItemPadding)
+                            .padding(vertical = 6.dp, horizontal = 6.dp)
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(Color.White)
+                            .padding(vertical = 22.dp, horizontal = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (userData?.profilePictureUrl != null) {
+                            AsyncImage(
+                                model = userData.profilePictureUrl,
+                                contentDescription = "Profile picture",
+                                modifier = Modifier
+                                    .size(50.dp)
+                                    .clip(RoundedCornerShape(20.dp)),
+                                contentScale = ContentScale.Crop
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier
+                                    .size(50.dp)
+                                    .clip(RoundedCornerShape(6.dp))
+                                    .background(Color.Gray)
+                            )
+                        }
+                        if (userData?.username != null) {
+                            Text(
+                                text = userData.username,
+                                textAlign = TextAlign.Center,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier.padding(horizontal = 4.dp)
+                            )
+                        } else {
+                            Text(
+                                text = "simple User",
+                                textAlign = TextAlign.Center,
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier.padding(horizontal = 4.dp)
+                            )
+                        }
                     }
-                    if(userData?.username != null) {
-                        Text(
-                            text = userData.username,
-                            textAlign = TextAlign.Center,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            modifier = Modifier.padding(horizontal = 4.dp)
-                        )
-                    }else{
-                        Text(
-                            text = "simple User",
-                            textAlign = TextAlign.Center,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            modifier = Modifier.padding(horizontal = 4.dp)
-                        )
-                    }
-                }
-                LazyColumn {
-                    item {
-                        allNavItems(onSignOut = {onSignOut()}, navController = navController)
+                    LazyColumn {
+                        item {
+                            allNavItems(onSignOut = { onSignOut() }, navController = navController)
+                        }
                     }
                 }
             }
@@ -225,7 +232,7 @@ fun homeScreen(
                             Icon(
                                 painter = painterResource(id = R.drawable.menu),
                                 contentDescription = null,
-                                modifier = Modifier.padding(horizontal = 10.dp)
+
                             )
                         }
                     },
@@ -234,20 +241,28 @@ fun homeScreen(
                         containerColor = Color(236,236,236)
                     ),
                     actions = {
-                        if(userData?.profilePictureUrl != null) {
-                            AsyncImage(
-                                model = userData.profilePictureUrl,
-                                contentDescription = "Profile picture",
-                                modifier = Modifier
-                                    .size(40.dp)
-                                    .clip(RoundedCornerShape(15.dp)),
-                                contentScale = ContentScale.Crop
-                            )
-                        }else{
-                            Box(modifier = Modifier
-                                .size(50.dp)
-                                .clip(RoundedCornerShape(6.dp))
-                                .background(Color.Gray))
+                        Row{
+                            if (userData?.profilePictureUrl != null) {
+                                AsyncImage(
+                                    model = userData.profilePictureUrl,
+                                    contentDescription = "Profile picture",
+                                    modifier = Modifier
+                                        .padding(horizontal = 20.dp)
+                                        .size(40.dp)
+                                        .clip(RoundedCornerShape(15.dp))
+                                        ,
+                                    contentScale = ContentScale.Crop
+                                )
+                            } else {
+                                Box(
+                                    modifier = Modifier
+                                        .padding(end = 20.dp)
+                                        .size(40.dp)
+                                        .clip(RoundedCornerShape(6.dp))
+                                        .background(Color.Gray)
+
+                                )
+                            }
                         }
                     },
 
@@ -382,8 +397,8 @@ fun navItem
         selected = selected,
         onClick = { onclick() },
         colors = NavigationDrawerItemDefaults.colors(
-            selectedContainerColor = colorResource(id = R.color.itemColor),
-            unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+            selectedContainerColor = Color.White,
+            unselectedContainerColor = Color.White
         ),
         badge = { Text(text = badge)},
         icon = {
@@ -394,7 +409,7 @@ fun navItem
         },
         modifier = Modifier
             .padding(NavigationDrawerItemDefaults.ItemPadding)
-            .padding(vertical = 3.dp)
+            .padding(vertical = 3.dp).border(1.dp,Color.LightGray, CircleShape)
     )
 }
 
@@ -452,10 +467,10 @@ fun allNavItems(
         },
         modifier = Modifier
             .padding(NavigationDrawerItemDefaults.ItemPadding)
-            .padding(vertical = 3.dp),
+            .padding(vertical = 3.dp).border(1.dp,Color.LightGray, CircleShape),
         colors = NavigationDrawerItemDefaults.colors(
-            selectedContainerColor = colorResource(id = R.color.itemColor),
-            unselectedContainerColor = colorResource(id = R.color.unSelecteditemColor)
+            selectedContainerColor = Color.White,
+            unselectedContainerColor = Color.White
         )
     )
 }
@@ -641,12 +656,12 @@ fun topRated(
     modifier: Modifier = Modifier
 ) {
     var toprated = listOf(
-        DoctorInfo("Mahmoud","Dentist",4,50),
-        DoctorInfo("Ahmed","Dentist",4,50),
-        DoctorInfo("Islam","Dentist",4,50),
-        DoctorInfo("Amgd","Dentist",4,50),
-        DoctorInfo("Israa","Dentist",4,50),
-        DoctorInfo("Yasmeen","Dentist",4,50),
+        DoctorInfo("Mahmoud","Dentist",4,50,3,"I am a good Doctor",R.drawable.doc),
+        DoctorInfo("Ahmed","Dentist",4,50,3,"I am a good Doctor",R.drawable.doc),
+        DoctorInfo("Islam","Dentist",4,50,3,"I am a good Doctor",R.drawable.doc),
+        DoctorInfo("Amgd","Dentist",4,50,3,"I am a good Doctor",R.drawable.doc),
+        DoctorInfo("Israa","Dentist",4,50,3,"I am a good Doctor",R.drawable.doc),
+        DoctorInfo("Yasmeen","Dentist",4,50,3,"I am a good Doctor",R.drawable.doc),
     )
     Column(modifier = modifier
         .fillMaxWidth()
