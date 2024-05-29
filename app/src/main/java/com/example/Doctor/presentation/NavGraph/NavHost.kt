@@ -51,6 +51,7 @@ import com.example.Doctor.presentation.HomeScreen.Pediatricians
 import com.example.Doctor.presentation.HomeScreen.Psychiatrists
 import com.example.Doctor.presentation.HomeScreen.Psychologists
 import com.example.Doctor.presentation.HomeScreen.Rheumatologists
+import com.example.Doctor.presentation.HomeScreen.aboutDoctor
 import com.example.Doctor.presentation.HomeScreen.homeScreen
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.GoogleAuthUiClient
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.SignInViewModel
@@ -199,6 +200,9 @@ fun NavGraph(
              }
              composable(route = Routes.AllDoctorsScreen.route){
                  AllDoctors(doctors = AllDoctorsList, navController = navController)
+             }
+             composable(route = Routes.AboutDoctor.route){
+                 aboutDoctor(navController = navController)
              }
          }
      }

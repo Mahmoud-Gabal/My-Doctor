@@ -40,12 +40,12 @@ import com.example.Doctor.presentation.onBOardingScreen.pages.welcomePage
 import com.example.Doctor.ui.theme.MyDoctorTheme
 import kotlinx.coroutines.launch
 
-
 @OptIn(ExperimentalFoundationApi::class)
+@Preview(showBackground = true)
 @Composable
 fun OnBoardingScreen(
     modifier: Modifier = Modifier,
-    onEvent : (onBoardingEvents) -> Unit
+    onEvent : (onBoardingEvents) -> Unit = {}
 ) {
     Box(modifier = modifier.fillMaxSize()){
         Image(

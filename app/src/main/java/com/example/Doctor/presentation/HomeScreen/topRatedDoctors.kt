@@ -9,11 +9,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
 @Composable
 fun topDoctors(
     modifier: Modifier = Modifier,
-    topRated : List<DoctorInfo>
+    topRated : List<DoctorInfo>,
+    navController: NavHostController
 ) {
     LazyColumn (
         modifier = modifier
@@ -23,7 +25,7 @@ fun topDoctors(
         contentPadding = PaddingValues(vertical = 10.dp)
     ){
         items(topRated){ doctorInfo ->
-            doctorCard(info = doctorInfo )
+            doctorCard(info = doctorInfo , navController = navController)
         }
     }
 }

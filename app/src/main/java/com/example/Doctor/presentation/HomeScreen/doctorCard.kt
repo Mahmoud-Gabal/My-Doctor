@@ -2,6 +2,7 @@ package com.example.Doctor.presentation.HomeScreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,14 +29,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.Doctor.R
-
+import com.example.Doctor.presentation.NavGraph.Routes
+@Preview
 @Composable
 fun doctorCard(
     modifier: Modifier = Modifier,
-    info: DoctorInfo
+    info: DoctorInfo = DoctorInfo("mahmoud","doc",3,45,3,"ggg",R.drawable.doc),
+    navController: NavHostController = rememberNavController()
 )
 {
     var restStars by remember {
@@ -47,6 +53,9 @@ fun doctorCard(
             .clip(RoundedCornerShape(23.dp))
             .background(Color.White)
             .padding(12.dp)
+            .clickable {
+                navController.navigate(Routes.AboutDoctor.route)
+            }
         ,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -58,7 +67,9 @@ fun doctorCard(
         Image(
             painter = painterResource(id = R.drawable.doc),
             contentDescription = null,
-            modifier = Modifier.size(67.dp).clip(RoundedCornerShape(15.dp)),
+            modifier = Modifier
+                .size(67.dp)
+                .clip(RoundedCornerShape(15.dp)),
             contentScale = ContentScale.Crop
         )
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
@@ -66,7 +77,7 @@ fun doctorCard(
                 color = colorResource(id = R.color.darkBlue)
             )
             Text(text = info.job, fontSize = 12.sp)
-            Row(modifier = Modifier.padding(top = 5.dp)){
+            Row(modifier = Modifier.padding(top = 5.dp), verticalAlignment = Alignment.CenterVertically){
                 for (i in 1..info.stars) {
                     Icon(
                         imageVector = Icons.Filled.Star,

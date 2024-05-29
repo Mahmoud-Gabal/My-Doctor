@@ -270,7 +270,7 @@ fun homeScreen(
             },
             containerColor = Color(236,236,236)
         ) {
-            basicHomeScreen(paddingValues = it, userData = userData)
+            basicHomeScreen(paddingValues = it, userData = userData, navController = navController)
         }
     }
 
@@ -280,7 +280,8 @@ fun homeScreen(
 fun basicHomeScreen(
     modifier: Modifier = Modifier,
     paddingValues: PaddingValues,
-    userData: UserData? = null
+    userData: UserData? = null,
+    navController: NavHostController
 ) {
     Column(
         modifier = modifier
@@ -380,7 +381,7 @@ fun basicHomeScreen(
             )
         }
         categoryPager()
-        topRated()
+        topRated(navController = navController)
     }
 }
 @Composable
@@ -653,7 +654,8 @@ fun categories(modifier: Modifier = Modifier) {
 
 @Composable
 fun topRated(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController : NavHostController
 ) {
     var toprated = listOf(
         DoctorInfo("Mahmoud","Dentist",4,50,3,"I am a good Doctor",R.drawable.doc),
@@ -680,7 +682,7 @@ fun topRated(
             Text(text = "See all")
         }
         topDoctors(
-            topRated = toprated
+            topRated = toprated, navController = navController
         )
 
     }

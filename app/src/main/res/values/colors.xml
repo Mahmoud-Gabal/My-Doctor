@@ -17,8 +17,10 @@
     <color name="splashText">#CCCED3</color>
     <color name="unSelecteditemColor">#F1F1F1</color>
     <color name="blueGrey">#CCCED3</color>
+    <color name="DarkblueGrey">#5F5F60</color>
     <color name="ButtonColor">#130530</color>
     <color name="darkBlue">#130530</color>
     <color name="unSelected">#afcace</color>
     <color name="itemColor">#D77CD5FF</color>
+    <color name="transparentWhite">#1EE3E3E3</color>
 </resources>

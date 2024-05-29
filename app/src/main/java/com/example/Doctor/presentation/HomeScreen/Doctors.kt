@@ -91,7 +91,7 @@ fun Oculists(
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
             items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo )
+                doctorCard(info = doctorInfo , navController = navController)
             }
         }
     }
@@ -139,7 +139,7 @@ fun Cardiologists(
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
             items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo )
+                doctorCard(info = doctorInfo , navController = navController)
             }
         }
     }
@@ -187,7 +187,7 @@ fun Psychiatrists(
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
             items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo )
+                doctorCard(info = doctorInfo , navController = navController)
             }
         }
     }
@@ -235,7 +235,7 @@ fun Rheumatologists(
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
             items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo )
+                doctorCard(info = doctorInfo , navController = navController)
             }
         }
     }
@@ -283,7 +283,7 @@ fun Neurologists(
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
             items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo )
+                doctorCard(info = doctorInfo , navController = navController)
             }
         }
     }
@@ -331,7 +331,7 @@ fun Obstetricians(
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
             items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo )
+                doctorCard(info = doctorInfo , navController = navController)
             }
         }
     }
@@ -379,7 +379,7 @@ fun O_R_Ls(
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
             items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo )
+                doctorCard(info = doctorInfo , navController = navController)
             }
         }
     }
@@ -427,7 +427,7 @@ fun Psychologists(
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
             items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo )
+                doctorCard(info = doctorInfo , navController = navController)
             }
         }
     }
@@ -475,7 +475,7 @@ fun Pediatricians(
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
             items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo )
+                doctorCard(info = doctorInfo , navController = navController)
             }
         }
     }
@@ -524,7 +524,7 @@ fun Dermatologistes(
                 contentPadding = PaddingValues(vertical = 10.dp)
             ){
                 items(doctors){ doctorInfo ->
-                    doctorCard(info = doctorInfo )
+                    doctorCard(info = doctorInfo , navController = navController)
                 }
             }
         }
@@ -573,7 +573,7 @@ fun Dentists(
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
             items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo )
+                doctorCard(info = doctorInfo , navController = navController)
             }
         }
     }
@@ -621,7 +621,7 @@ fun Internists(
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
             items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo )
+                doctorCard(info = doctorInfo , navController = navController)
             }
         }
     }
@@ -669,7 +669,7 @@ fun AllDoctors(
             contentPadding = PaddingValues(vertical = 10.dp)
         ){
             items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo )
+                doctorCard(info = doctorInfo , navController = navController)
             }
         }
     }
