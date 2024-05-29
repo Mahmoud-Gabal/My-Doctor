@@ -2,11 +2,13 @@ package com.example.Doctor.presentation.NavGraph
 
 import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -61,6 +63,7 @@ import com.example.Doctor.presentation.onBOardingScreen.OnBoardingScreen
 import com.example.Doctor.presentation.onBOardingScreen.onBoardingViewModel
 import kotlinx.coroutines.launch
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun NavGraph(

@@ -380,7 +380,7 @@ fun basicHomeScreen(
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
         }
-        categoryPager()
+        categoryPager(navController = navController)
         topRated(navController = navController)
     }
 }
@@ -567,7 +567,7 @@ fun dropDownMenu() {
 }
 
 @Composable
-fun categoryPager(modifier: Modifier = Modifier) {
+fun categoryPager(modifier: Modifier = Modifier,navController: NavHostController) {
     Column(modifier = modifier
         .fillMaxWidth()
         .padding(top = 25.dp)) {
@@ -582,13 +582,13 @@ fun categoryPager(modifier: Modifier = Modifier) {
                 fontWeight = FontWeight.SemiBold,
                 color = colorResource(id = R.color.darkBlue)
             )
-            Text(text = "See all")
+            Text(text = "See all",modifier= Modifier.clickable { navController.navigate(Routes.AllDoctorsScreen.route) })
         }
-        categories()
+        categories(navController = navController)
     }
 }
 @Composable
-fun categories(modifier: Modifier = Modifier) {
+fun categories(modifier: Modifier = Modifier,navController: NavHostController) {
     val categoryList = listOf(
         "Oculist/Ophthalmologist","Cardiologist","Psychiatrist",
         "Rheumatologist","Neurologist","Obstetrician/Gynecologist",
@@ -603,7 +603,7 @@ fun categories(modifier: Modifier = Modifier) {
     )
 
     var selectedIndex by rememberSaveable {
-        mutableStateOf(0)
+        mutableStateOf(-1)
     }
     LazyRow (
         modifier = modifier
@@ -621,7 +621,23 @@ fun categories(modifier: Modifier = Modifier) {
                         .clip(RoundedCornerShape(18.dp))
                         .border(1.dp, Color.LightGray, shape = RoundedCornerShape(18.dp))
                         .background(selectedColor)
-                        .clickable { selectedIndex = index }
+                        .clickable {
+                            selectedIndex = index
+                            when(index){
+                                0 -> navController.navigate(Routes.OculistsScreen.route)
+                                1 -> navController.navigate(Routes.CardiologistsScreen.route)
+                                2 -> navController.navigate(Routes.PsychiatristsScreen.route)
+                                3 -> navController.navigate(Routes.RheumatologistsScreen.route)
+                                4 -> navController.navigate(Routes.NeurologistsScreen.route)
+                                5 -> navController.navigate(Routes.ObstetriciansScreen.route)
+                                6 -> navController.navigate(Routes.O_R_LsScreen.route)
+                                7 -> navController.navigate(Routes.PsychologistsScreen.route)
+                                8 -> navController.navigate(Routes.PediatriciansScreen.route)
+                                9 -> navController.navigate(Routes.DermatologistesScreen.route)
+                                10 -> navController.navigate(Routes.DentistsScreen.route)
+                                11 -> navController.navigate(Routes.InternistsScreen.route)
+                            }
+                        }
 
                 ) {
                     Row (

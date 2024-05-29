@@ -65,7 +65,7 @@ fun doctorCard(
 //            .clip(RoundedCornerShape(15.dp))
 //            .background(Color.Gray))
         Image(
-            painter = painterResource(id = R.drawable.doc),
+            painter = painterResource(id = info.img),
             contentDescription = null,
             modifier = Modifier
                 .size(67.dp)
