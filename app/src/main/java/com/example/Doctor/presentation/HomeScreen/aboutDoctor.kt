@@ -84,7 +84,7 @@ fun aboutDoctor(
         "I am Mahmoud,i have 4 years experience in worjing as bone specialist,i work in daamiette," +
                 ".I work in Alazhar hospital,i studied in Faculty of medicine in Damiette university"
                 + ".I love my work and do my best seeking to help my patients.",
-        R.drawable.doc
+        R.drawable.doc, "Cairo"
     ),
     navController: NavHostController = rememberNavController()
 ) {
@@ -121,7 +121,7 @@ fun aboutDoctor(
                 .padding(it)
         )
         {
-            Column{
+            Column {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -140,15 +140,25 @@ fun aboutDoctor(
                             .padding(start = 20.dp)
                             .align(Alignment.BottomCenter),
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.doc),
-                            contentDescription = null,
-                            modifier = Modifier
-                                .width(100.dp)
-                                .height(160.dp)
-                                .clip(RoundedCornerShape(15.dp)),
-                            contentScale = ContentScale.Crop
-                        )
+                        if (info.img == 0){
+                            Box(
+                                modifier = Modifier
+                                    .width(100.dp)
+                                    .height(160.dp)
+                                    .clip(RoundedCornerShape(15.dp))
+                                    .background(Color.Gray)
+                            )
+                        }else{
+                            Image(
+                                painter = painterResource(id = R.drawable.doc),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .width(100.dp)
+                                    .height(160.dp)
+                                    .clip(RoundedCornerShape(15.dp)),
+                                contentScale = ContentScale.Crop
+                            )
+                        }
                         Column(
                             modifier = Modifier
                                 .padding(start = 15.dp)
@@ -232,102 +242,102 @@ fun aboutDoctor(
                 ) {
                     item {
                         Column {
-                                var isExpanded by rememberSaveable {
-                                    mutableStateOf(false)
-                                }
-                                Column(
-                                    modifier = Modifier
-                                        .padding(bottom = 20.dp)
-                                        .fillMaxWidth()
-                                        .clip(RoundedCornerShape(14.dp))
-                                        .background(Color.White)
-                                        .padding(horizontal = 20.dp)
-                                        .clickable {
-                                            isExpanded = !isExpanded
-                                        }
-                                ) {
-                                    Text(
-                                        text = "About the doctor ",
-                                        style = MaterialTheme.typography.titleMedium,
-                                        modifier = Modifier.padding(vertical = 10.dp),
-                                        color = colorResource(id = R.color.darkBlue),
-                                        fontWeight = FontWeight.SemiBold
-                                    )
-                                    if (info.about.lastIndex > 130) {
-                                        Text(
-                                            text = buildAnnotatedString {
-                                                if (isExpanded) append(info.about) else append(
-                                                    info.about,
-                                                    start = 0,
-                                                    end = 130
-                                                )
-                                                withStyle(SpanStyle(color = colorResource(id = R.color.splashBackgroundTr))) {
-                                                    append(if (isExpanded) "Show less" else "Show more")
-                                                }
-                                            },
-                                            lineHeight = 22.sp,
-                                            modifier = Modifier.padding(bottom = 10.dp),
-                                            color = colorResource(id = R.color.DarkblueGrey)
-                                        )
-                                    } else {
-                                        Text(
-                                            text = info.about,
-                                            lineHeight = 22.sp,
-                                            modifier = Modifier.padding(bottom = 10.dp),
-                                            color = colorResource(id = R.color.DarkblueGrey)
-                                        )
-                                    }
-
-                                }
-                                CalendarApp()
-                                Spacer(modifier = Modifier.height(50.dp))
+                            var isExpanded by rememberSaveable {
+                                mutableStateOf(false)
                             }
+                            Column(
+                                modifier = Modifier
+                                    .padding(bottom = 20.dp)
+                                    .fillMaxWidth()
+                                    .clip(RoundedCornerShape(14.dp))
+                                    .background(Color.White)
+                                    .padding(horizontal = 20.dp)
+                                    .clickable {
+                                        isExpanded = !isExpanded
+                                    }
+                            ) {
+                                Text(
+                                    text = "About the doctor ",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    modifier = Modifier.padding(vertical = 10.dp),
+                                    color = colorResource(id = R.color.darkBlue),
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                                if (info.about.lastIndex > 130) {
+                                    Text(
+                                        text = buildAnnotatedString {
+                                            if (isExpanded) append(info.about) else append(
+                                                info.about,
+                                                start = 0,
+                                                end = 130
+                                            )
+                                            withStyle(SpanStyle(color = colorResource(id = R.color.splashBackgroundTr))) {
+                                                append(if (isExpanded) "Show less" else "Show more")
+                                            }
+                                        },
+                                        lineHeight = 22.sp,
+                                        modifier = Modifier.padding(bottom = 10.dp),
+                                        color = colorResource(id = R.color.DarkblueGrey)
+                                    )
+                                } else {
+                                    Text(
+                                        text = info.about,
+                                        lineHeight = 22.sp,
+                                        modifier = Modifier.padding(bottom = 10.dp),
+                                        color = colorResource(id = R.color.DarkblueGrey)
+                                    )
+                                }
+
+                            }
+                            CalendarApp()
+                            Spacer(modifier = Modifier.height(50.dp))
+                        }
 
                     }
                 }
             }
-                Button(
-                    onClick = { },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorResource(id = R.color.ButtonColor),
-                        contentColor = Color.White,
-                    ),
-                    shape = RoundedCornerShape(size = 16.dp),
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp)
-                        .height(60.dp)
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
+            Button(
+                onClick = { },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colorResource(id = R.color.ButtonColor),
+                    contentColor = Color.White,
+                ),
+                shape = RoundedCornerShape(size = 16.dp),
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .height(60.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
 
-                    ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
 //                                    .padding(horizontal = 20.dp),
 
+                ) {
+                    Text(
+                        text = "Book an appointment",
+                        style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                    IconButton(
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier
+                            .width(35.dp)
+                            .align(Alignment.CenterEnd)
                     ) {
-                        Text(
-                            text = "Book an appointment",
-                            style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
-                            modifier = Modifier.align(Alignment.Center)
-                        )
-                        IconButton(
-                            onClick = { /*TODO*/ },
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right_24),
+                            contentDescription = null,
                             modifier = Modifier
-                                .width(35.dp)
-                                .align(Alignment.CenterEnd)
-                        ) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_keyboard_arrow_right_24),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(35.dp),
-                                tint = Color.White
-                            )
-                        }
+                                .size(35.dp),
+                            tint = Color.White
+                        )
                     }
-
                 }
+
+            }
 
 
         }

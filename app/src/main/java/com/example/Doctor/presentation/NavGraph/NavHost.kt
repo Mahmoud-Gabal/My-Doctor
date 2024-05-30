@@ -21,9 +21,11 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.Doctor.data.local.doctors.AllDoctorsList
 import com.example.Doctor.data.local.doctors.CardiologistsList
@@ -41,9 +43,11 @@ import com.example.Doctor.data.local.doctors.RheumatologistsList
 import com.example.Doctor.presentation.EmailCreatedScreen.createdEmailScreen
 import com.example.Doctor.presentation.ForgotPassword.forgotPasswordScreen
 import com.example.Doctor.presentation.HomeScreen.AllDoctors
+import com.example.Doctor.presentation.HomeScreen.AllTopRatedDoctors
 import com.example.Doctor.presentation.HomeScreen.Cardiologists
 import com.example.Doctor.presentation.HomeScreen.Dentists
 import com.example.Doctor.presentation.HomeScreen.Dermatologistes
+import com.example.Doctor.presentation.HomeScreen.DoctorInfo
 import com.example.Doctor.presentation.HomeScreen.Internists
 import com.example.Doctor.presentation.HomeScreen.Neurologists
 import com.example.Doctor.presentation.HomeScreen.O_R_Ls
@@ -54,6 +58,7 @@ import com.example.Doctor.presentation.HomeScreen.Psychiatrists
 import com.example.Doctor.presentation.HomeScreen.Psychologists
 import com.example.Doctor.presentation.HomeScreen.Rheumatologists
 import com.example.Doctor.presentation.HomeScreen.aboutDoctor
+import com.example.Doctor.presentation.HomeScreen.getTopRated
 import com.example.Doctor.presentation.HomeScreen.homeScreen
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.GoogleAuthUiClient
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.SignInViewModel
@@ -204,8 +209,32 @@ fun NavGraph(
              composable(route = Routes.AllDoctorsScreen.route){
                  AllDoctors(doctors = AllDoctorsList, navController = navController)
              }
-             composable(route = Routes.AboutDoctor.route){
-                 aboutDoctor(navController = navController)
+             composable(
+                 route = Routes.AboutDoctor.route + "/{name}/{job}/{stars}/{reviews}/{exp}/{about}/{img}/{address}",
+                 arguments = listOf(
+                     navArgument(name = "name"){type = NavType.StringType},
+                     navArgument(name = "job"){type = NavType.StringType},
+                     navArgument(name = "stars"){type = NavType.IntType},
+                     navArgument(name = "reviews"){type = NavType.IntType},
+                     navArgument(name = "exp"){type = NavType.IntType},
+                     navArgument(name = "about"){type = NavType.StringType},
+                     navArgument(name = "img"){type = NavType.IntType},
+                     navArgument(name = "address"){type = NavType.StringType},
+                 )
+             ){entry ->
+                 val name = entry.arguments?.getString("name")
+                 val job = entry.arguments?.getString("job")
+                 val stars = entry.arguments?.getInt("stars")
+                 val reviews = entry.arguments?.getInt("reviews")
+                 val exp = entry.arguments?.getInt("exp")
+                 val about = entry.arguments?.getString("about")
+                 val img = entry.arguments?.getInt("img")
+                 val address = entry.arguments?.getString("address")
+                 val info = DoctorInfo(name ?: "", job ?: "",stars ?: 0,reviews ?: 0,exp ?: 0,about ?: "",img ?: 0,address ?: "")
+                 aboutDoctor(navController = navController, info = info)
+             }
+             composable(route = Routes.AllTopRatedDoctorsScreen.route){
+                 AllTopRatedDoctors(doctors = getTopRated(AllDoctorsList),navController = navController)
              }
          }
      }

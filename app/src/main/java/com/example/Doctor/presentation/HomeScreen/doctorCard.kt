@@ -40,11 +40,11 @@ import com.example.Doctor.presentation.NavGraph.Routes
 @Composable
 fun doctorCard(
     modifier: Modifier = Modifier,
-    info: DoctorInfo = DoctorInfo("mahmoud","doc",3,45,3,"ggg",R.drawable.doc),
+    info: DoctorInfo = DoctorInfo("mahmoud","doc",3,45,3,"ggg",R.drawable.doc,"Cairo"),
     navController: NavHostController = rememberNavController()
 )
 {
-    var restStars by remember {
+    var restStars  by remember {
         mutableStateOf(5 - info.stars)
     }
     Row (
@@ -54,7 +54,8 @@ fun doctorCard(
             .background(Color.White)
             .padding(12.dp)
             .clickable {
-                navController.navigate(Routes.AboutDoctor.route)
+                navController.navigate(Routes.AboutDoctor.route
+                        +"/${info.name}/${info.job}/${info.stars}/${info.reviews}/${info.exp}/${info.about}/${info.img}/${info.address}")
             }
         ,
         verticalAlignment = Alignment.CenterVertically,

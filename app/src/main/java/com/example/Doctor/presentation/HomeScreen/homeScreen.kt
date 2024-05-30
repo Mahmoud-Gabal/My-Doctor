@@ -1,5 +1,6 @@
 package com.example.Doctor.presentation.HomeScreen
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.Icon
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -98,11 +99,14 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -133,6 +137,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.Doctor.R
+import com.example.Doctor.data.local.doctors.CardiologistsList
+import com.example.Doctor.data.local.doctors.DentistsList
+import com.example.Doctor.data.local.doctors.DermatologistesList
+import com.example.Doctor.data.local.doctors.InternistsList
+import com.example.Doctor.data.local.doctors.NeurologistsList
+import com.example.Doctor.data.local.doctors.O_R_LsList
+import com.example.Doctor.data.local.doctors.ObstetriciansList
+import com.example.Doctor.data.local.doctors.OculistsList
+import com.example.Doctor.data.local.doctors.PediatriciansList
+import com.example.Doctor.data.local.doctors.PsychologistsList
+import com.example.Doctor.data.local.doctors.RheumatologistsList
 import com.example.Doctor.presentation.NavGraph.Routes
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.UserData
 import com.example.Doctor.ui.theme.MyDoctorTheme
@@ -381,7 +396,7 @@ fun basicHomeScreen(
             )
         }
         categoryPager(navController = navController)
-        topRated(navController = navController)
+//        topRated(navController = navController)
     }
 }
 @Composable
@@ -410,7 +425,8 @@ fun navItem
         },
         modifier = Modifier
             .padding(NavigationDrawerItemDefaults.ItemPadding)
-            .padding(vertical = 3.dp).border(1.dp,Color.LightGray, CircleShape)
+            .padding(vertical = 3.dp)
+            .border(1.dp, Color.LightGray, CircleShape)
     )
 }
 
@@ -468,7 +484,8 @@ fun allNavItems(
         },
         modifier = Modifier
             .padding(NavigationDrawerItemDefaults.ItemPadding)
-            .padding(vertical = 3.dp).border(1.dp,Color.LightGray, CircleShape),
+            .padding(vertical = 3.dp)
+            .border(1.dp, Color.LightGray, CircleShape),
         colors = NavigationDrawerItemDefaults.colors(
             selectedContainerColor = Color.White,
             unselectedContainerColor = Color.White
@@ -483,11 +500,11 @@ fun dropDownMenu() {
     var expanded by remember { mutableStateOf(false) }
     val suggestions = listOf(
         "Cairo", "Alex", "Damiette", "Luxor","Aswan",
-        "Cairo", "Alex", "Damiette", "Luxor","Aswan",
-        "Cairo", "Alex", "Damiette", "Luxor","Aswan",
-        "Cairo", "Alex", "Damiette", "Luxor","Aswan",
-        "Cairo", "Alex", "Damiette", "Luxor","Aswan",
-        "Cairo", "Alex", "Damiette", "Luxor","Aswan",
+        "Dakahlia", "North Sinai", "Fayoum", "Port Said","Gharbia"
+        , "Giza", "Qalyubia", "Sharqia","Ismailia",
+        "Suez", "Kafr El Sheikh", "Gharbia", "Menoufia","Beheira",
+        "Matrouh", "South Sinai", "Beni Suef", "Minya","Assiut",
+        "Sohag", "Qena", "Red Sea", "El Wadi El Gedid"
     )
     var selectedText by remember { mutableStateOf("") }
 
@@ -586,7 +603,9 @@ fun categoryPager(modifier: Modifier = Modifier,navController: NavHostController
         }
         categories(navController = navController)
     }
+
 }
+@SuppressLint("MutableCollectionMutableState")
 @Composable
 fun categories(modifier: Modifier = Modifier,navController: NavHostController) {
     val categoryList = listOf(
@@ -603,7 +622,10 @@ fun categories(modifier: Modifier = Modifier,navController: NavHostController) {
     )
 
     var selectedIndex by rememberSaveable {
-        mutableStateOf(-1)
+        mutableStateOf(0)
+    }
+    var toprated by rememberSaveable {
+        mutableStateOf(getTopRated(OculistsList))
     }
     LazyRow (
         modifier = modifier
@@ -623,20 +645,22 @@ fun categories(modifier: Modifier = Modifier,navController: NavHostController) {
                         .background(selectedColor)
                         .clickable {
                             selectedIndex = index
-                            when(index){
-                                0 -> navController.navigate(Routes.OculistsScreen.route)
-                                1 -> navController.navigate(Routes.CardiologistsScreen.route)
-                                2 -> navController.navigate(Routes.PsychiatristsScreen.route)
-                                3 -> navController.navigate(Routes.RheumatologistsScreen.route)
-                                4 -> navController.navigate(Routes.NeurologistsScreen.route)
-                                5 -> navController.navigate(Routes.ObstetriciansScreen.route)
-                                6 -> navController.navigate(Routes.O_R_LsScreen.route)
-                                7 -> navController.navigate(Routes.PsychologistsScreen.route)
-                                8 -> navController.navigate(Routes.PediatriciansScreen.route)
-                                9 -> navController.navigate(Routes.DermatologistesScreen.route)
-                                10 -> navController.navigate(Routes.DentistsScreen.route)
-                                11 -> navController.navigate(Routes.InternistsScreen.route)
+
+                            when (index) {
+                                0 -> toprated = getTopRated(OculistsList)
+                                1 -> toprated = getTopRated(CardiologistsList)
+                                2 -> toprated = getTopRated(PsychologistsList)
+                                3 -> toprated = getTopRated(RheumatologistsList)
+                                4 -> toprated = getTopRated(NeurologistsList)
+                                5 -> toprated = getTopRated(ObstetriciansList)
+                                6 -> toprated = getTopRated(O_R_LsList)
+                                7 -> toprated = getTopRated(PsychologistsList)
+                                8 -> toprated = getTopRated(PediatriciansList)
+                                9 -> toprated = getTopRated(DermatologistesList)
+                                10 -> toprated = getTopRated(DentistsList)
+                                11 -> toprated = getTopRated(InternistsList)
                             }
+
                         }
 
                 ) {
@@ -666,21 +690,17 @@ fun categories(modifier: Modifier = Modifier,navController: NavHostController) {
 
 
     }
+    topRated(navController = navController, toprated = toprated)
 }
+
 
 @Composable
 fun topRated(
     modifier: Modifier = Modifier,
-    navController : NavHostController
+    navController : NavHostController,
+    toprated  :MutableList<DoctorInfo>
 ) {
-    var toprated = listOf(
-        DoctorInfo("Mahmoud","Dentist",4,50,3,"I am a good Doctor",R.drawable.doc),
-        DoctorInfo("Ahmed","Dentist",4,50,3,"I am a good Doctor",R.drawable.doc),
-        DoctorInfo("Islam","Dentist",4,50,3,"I am a good Doctor",R.drawable.doc),
-        DoctorInfo("Amgd","Dentist",4,50,3,"I am a good Doctor",R.drawable.doc),
-        DoctorInfo("Israa","Dentist",4,50,3,"I am a good Doctor",R.drawable.doc),
-        DoctorInfo("Yasmeen","Dentist",4,50,3,"I am a good Doctor",R.drawable.doc),
-    )
+
     Column(modifier = modifier
         .fillMaxWidth()
         .padding(top = 30.dp)) {
@@ -695,7 +715,7 @@ fun topRated(
                 fontWeight = FontWeight.SemiBold,
                 color = colorResource(id = R.color.darkBlue)
             )
-            Text(text = "See all")
+            Text(text = "See all",modifier = Modifier.clickable { navController.navigate(Routes.AllTopRatedDoctorsScreen.route) })
         }
         topDoctors(
             topRated = toprated, navController = navController

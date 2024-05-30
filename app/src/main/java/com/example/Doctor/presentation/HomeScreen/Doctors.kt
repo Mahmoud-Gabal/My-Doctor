@@ -489,7 +489,8 @@ fun Dermatologistes(
     navController : NavHostController
 ) {
     val scope = rememberCoroutineScope()
-        Scaffold(
+
+    Scaffold(
             topBar = {
                 TopAppBar(
                     title = { Text(text = "") },
@@ -629,6 +630,53 @@ fun Internists(
 
 @Composable
 fun AllDoctors(
+    modifier: Modifier = Modifier,
+    doctors: List<DoctorInfo>,
+    navController : NavHostController
+) {
+    val scope = rememberCoroutineScope()
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "") },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        scope.launch {
+                            navController.navigate(Routes.HomeScreen.route)
+                        }
+                    }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = null,
+                            modifier = Modifier.padding(horizontal = 10.dp)
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    navigationIconContentColor = Color.Black,
+                    containerColor = Color(236,236,236)
+                )
+
+            )
+        },
+        containerColor = Color(236,236,236)
+    ) {
+        LazyColumn (
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(it)
+                .padding(horizontal = 20.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(vertical = 10.dp)
+        ){
+            items(doctors){ doctorInfo ->
+                doctorCard(info = doctorInfo , navController = navController)
+            }
+        }
+    }
+}
+@Composable
+fun AllTopRatedDoctors(
     modifier: Modifier = Modifier,
     doctors: List<DoctorInfo>,
     navController : NavHostController
