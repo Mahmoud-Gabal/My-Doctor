@@ -2,6 +2,7 @@ package com.example.Doctor.Activities
 
 import android.app.ActionBar
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.view.Window
 import androidx.activity.ComponentActivity
@@ -9,6 +10,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,7 +23,10 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
 import com.example.Doctor.R
+import com.example.Doctor.domain.local.db.DoctorDatabase
+import com.example.Doctor.presentation.HomeScreen.DoctorInfo
 
 
 import com.example.Doctor.presentation.NavGraph.NavGraph
@@ -34,6 +39,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+//    private val db by lazy {
+//        Room.databaseBuilder(
+//            applicationContext,
+//            DoctorDatabase::class.java,
+//            "Doctor_Db"
+//        ).build()
+//    }
     private val viewModel by viewModels<MainViewModel>()
     private val googleAuthUiClient by lazy {
         GoogleAuthUiClient(
@@ -41,6 +53,7 @@ class MainActivity : ComponentActivity() {
             oneTapClient = Identity.getSignInClient(applicationContext)
         )
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.requestWindowFeature(Window.FEATURE_NO_TITLE)

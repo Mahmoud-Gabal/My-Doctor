@@ -106,4 +106,10 @@ dependencies {
     implementation ("io.coil-kt:coil-compose:2.6.0")
 //    animation
     implementation("androidx.compose.animation:animation:1.6.7")
+
+// Room Db
+    implementation("androidx.room:room-ktx:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
+
+
  }

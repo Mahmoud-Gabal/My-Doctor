@@ -32,6 +32,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.Doctor.R
+import com.example.Doctor.data.local.doctors.AllDoctorsList
+import com.example.Doctor.presentation.HomeScreen.DoctorInfo
 import com.example.Doctor.presentation.onBOardingScreen.Dimens.pageIndicatorWidth
 import com.example.Doctor.presentation.onBOardingScreen.components.NewsButton
 import com.example.Doctor.presentation.onBOardingScreen.components.NewsTextButton
@@ -39,14 +41,18 @@ import com.example.Doctor.presentation.onBOardingScreen.components.pageIndicator
 import com.example.Doctor.presentation.onBOardingScreen.pages.welcomePage
 import com.example.Doctor.ui.theme.MyDoctorTheme
 import kotlinx.coroutines.launch
+import kotlin.reflect.KFunction1
 
 @OptIn(ExperimentalFoundationApi::class)
 @Preview(showBackground = true)
 @Composable
 fun OnBoardingScreen(
     modifier: Modifier = Modifier,
-    onEvent : (onBoardingEvents) -> Unit = {}
-) {
+    onEvent: (onBoardingEvents) -> Unit = {},
+    addDB: (List<DoctorInfo>) -> Unit = {val list = listOf(DoctorInfo(
+        "Khalil Faris","Cardiologist",1,45,3,"I am a good Doctor",R.drawable.doc,"Cairo"
+    )) }
+    ) {
     Box(modifier = modifier.fillMaxSize()){
         Image(
             modifier = Modifier.fillMaxSize(),
@@ -122,6 +128,7 @@ fun OnBoardingScreen(
                         scope.launch {
                             if (pagerState.currentPage == 2){
                                 onEvent(onBoardingEvents.saveAppEntry)
+                                addDB(AllDoctorsList)
                             }else{
                                 pagerState.animateScrollToPage(page = pagerState.currentPage +1)
                             }

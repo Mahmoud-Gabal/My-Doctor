@@ -15,6 +15,7 @@ sealed class Routes(
     object CreatedEmailSuccessfully  :Routes("Created_Email_Successfully")
     object App_Home : Routes("App_Home")
     object HomeScreen : Routes("HomeScreen")
+    object originHomeScreen : Routes("originHomeScreen")
 
 
 
@@ -34,5 +35,6 @@ sealed class Routes(
     object AllDoctorsScreen  :Routes("AllDoctors")
     object AboutDoctor  :Routes("aboutDoctor")
     object AllTopRatedDoctorsScreen : Routes("AllTopRatedDoctors")
+    object savedDocotrsScreen : Routes("saved_Docotrs")
 
 }

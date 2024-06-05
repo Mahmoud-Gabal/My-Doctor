@@ -24,7 +24,7 @@ fun NewsButton(
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = colorResource(id = R.color.ButtonColor),
+            containerColor = colorResource(id = R.color.darkBlue),
             contentColor = Color.White
         ),
         shape = RoundedCornerShape(size = 16.dp),

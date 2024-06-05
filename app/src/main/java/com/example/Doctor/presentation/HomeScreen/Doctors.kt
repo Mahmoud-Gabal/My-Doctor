@@ -5,8 +5,10 @@ package com.example.Doctor.presentation.HomeScreen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -46,11 +48,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.Doctor.R
+import com.example.Doctor.domain.local.db.bookmarkedDRs
 import com.example.Doctor.presentation.NavGraph.Routes
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Oculists(
+fun doctorsPage(
     modifier: Modifier = Modifier,
     doctors : List<DoctorInfo>,
     navController : NavHostController
@@ -63,7 +67,7 @@ fun Oculists(
                 navigationIcon = {
                     IconButton(onClick = {
                         scope.launch {
-                            navController.navigate(Routes.HomeScreen.route)
+                            navController.popBackStack()
                         }
                     }) {
                         Icon(
@@ -97,628 +101,35 @@ fun Oculists(
     }
 }
 
-@Composable
-fun Cardiologists(
-    modifier: Modifier = Modifier,
-    doctors : List<DoctorInfo>,
-    navController : NavHostController
-) {
-    val scope = rememberCoroutineScope()
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            navController.navigate(Routes.HomeScreen.route)
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.padding(horizontal = 10.dp)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    navigationIconContentColor = Color.Black,
-                    containerColor = Color(236,236,236)
-                )
-
-            )
-        },
-        containerColor = Color(236,236,236)
-    ) {
-        LazyColumn (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(it)
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 10.dp)
-        ){
-            items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo , navController = navController)
-            }
-        }
-    }
-}
-
-@Composable
-fun Psychiatrists(
-    modifier: Modifier = Modifier,
-    doctors : List<DoctorInfo>,
-    navController : NavHostController
-) {
-    val scope = rememberCoroutineScope()
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            navController.navigate(Routes.HomeScreen.route)
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.padding(horizontal = 10.dp)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    navigationIconContentColor = Color.Black,
-                    containerColor = Color(236,236,236)
-                )
-
-            )
-        },
-        containerColor = Color(236,236,236)
-    ) {
-        LazyColumn (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(it)
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 10.dp)
-        ){
-            items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo , navController = navController)
-            }
-        }
-    }
-}
-
-@Composable
-fun Rheumatologists(
-    modifier: Modifier = Modifier,
-    doctors : List<DoctorInfo>,
-    navController : NavHostController
-) {
-    val scope = rememberCoroutineScope()
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            navController.navigate(Routes.HomeScreen.route)
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.padding(horizontal = 10.dp)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    navigationIconContentColor = Color.Black,
-                    containerColor = Color(236,236,236)
-                )
-
-            )
-        },
-        containerColor = Color(236,236,236)
-    ) {
-        LazyColumn (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(it)
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 10.dp)
-        ){
-            items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo , navController = navController)
-            }
-        }
-    }
-}
-
-@Composable
-fun Neurologists(
-    modifier: Modifier = Modifier,
-    doctors : List<DoctorInfo>,
-    navController : NavHostController
-) {
-    val scope = rememberCoroutineScope()
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            navController.navigate(Routes.HomeScreen.route)
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.padding(horizontal = 10.dp)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    navigationIconContentColor = Color.Black,
-                    containerColor = Color(236,236,236)
-                )
-
-            )
-        },
-        containerColor = Color(236,236,236)
-    ) {
-        LazyColumn (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(it)
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 10.dp)
-        ){
-            items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo , navController = navController)
-            }
-        }
-    }
-}
-
-@Composable
-fun Obstetricians(
-    modifier: Modifier = Modifier,
-    doctors : List<DoctorInfo>,
-    navController : NavHostController
-) {
-    val scope = rememberCoroutineScope()
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            navController.navigate(Routes.HomeScreen.route)
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.padding(horizontal = 10.dp)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    navigationIconContentColor = Color.Black,
-                    containerColor = Color(236,236,236)
-                )
-
-            )
-        },
-        containerColor = Color(236,236,236)
-    ) {
-        LazyColumn (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(it)
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 10.dp)
-        ){
-            items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo , navController = navController)
-            }
-        }
-    }
-}
-
-@Composable
-fun O_R_Ls(
-    modifier: Modifier = Modifier,
-    doctors : List<DoctorInfo>,
-    navController : NavHostController
-) {
-    val scope = rememberCoroutineScope()
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            navController.navigate(Routes.HomeScreen.route)
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.padding(horizontal = 10.dp)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    navigationIconContentColor = Color.Black,
-                    containerColor = Color(236,236,236)
-                )
-
-            )
-        },
-        containerColor = Color(236,236,236)
-    ) {
-        LazyColumn (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(it)
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 10.dp)
-        ){
-            items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo , navController = navController)
-            }
-        }
-    }
-}
-
-@Composable
-fun Psychologists(
-    modifier: Modifier = Modifier,
-    doctors : List<DoctorInfo>,
-    navController : NavHostController
-) {
-    val scope = rememberCoroutineScope()
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            navController.navigate(Routes.HomeScreen.route)
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.padding(horizontal = 10.dp)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    navigationIconContentColor = Color.Black,
-                    containerColor = Color(236,236,236)
-                )
-
-            )
-        },
-        containerColor = Color(236,236,236)
-    ) {
-        LazyColumn (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(it)
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 10.dp)
-        ){
-            items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo , navController = navController)
-            }
-        }
-    }
-}
-
-@Composable
-fun Pediatricians(
-    modifier: Modifier = Modifier,
-    doctors : List<DoctorInfo>,
-    navController : NavHostController
-) {
-    val scope = rememberCoroutineScope()
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            navController.navigate(Routes.HomeScreen.route)
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.padding(horizontal = 10.dp)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    navigationIconContentColor = Color.Black,
-                    containerColor = Color(236,236,236)
-                )
-
-            )
-        },
-        containerColor = Color(236,236,236)
-    ) {
-        LazyColumn (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(it)
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 10.dp)
-        ){
-            items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo , navController = navController)
-            }
-        }
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Dermatologistes(
+fun savedDoctorsPage(
     modifier: Modifier = Modifier,
-    doctors : List<DoctorInfo>,
+    doctors : List<bookmarkedDRs>,
     navController : NavHostController
 ) {
-    val scope = rememberCoroutineScope()
-
-    Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(text = "") },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            scope.launch {
-                                navController.navigate(Routes.HomeScreen.route)
-                            }
-                        }) {
-                            Icon(
-                                imageVector = Icons.Filled.ArrowBack,
-                                contentDescription = null,
-                                modifier = Modifier.padding(horizontal = 10.dp)
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        navigationIconContentColor = Color.Black,
-                        containerColor = Color(236,236,236)
-                    )
-
-                )
-            },
-            containerColor = Color(236,236,236)
+    if (doctors.isNotEmpty()){
+        LazyColumn (
+            modifier = modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(vertical = 10.dp)
+        ){
+            items(doctors){ doctorInfo ->
+                savedDoctorCard(info = doctorInfo , navController = navController)
+            }
+        }
+    }else{
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LazyColumn (
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(it)
-                    .padding(horizontal = 20.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                contentPadding = PaddingValues(vertical = 10.dp)
-            ){
-                items(doctors){ doctorInfo ->
-                    doctorCard(info = doctorInfo , navController = navController)
-                }
-            }
-        }
-
-}
-
-@Composable
-fun Dentists(
-    modifier: Modifier = Modifier,
-    doctors : List<DoctorInfo>,
-    navController : NavHostController
-) {
-    val scope = rememberCoroutineScope()
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            navController.navigate(Routes.HomeScreen.route)
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.padding(horizontal = 10.dp).size(30.dp)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    navigationIconContentColor = Color.Black,
-                    containerColor = Color(236,236,236)
-                )
-
-            )
-        },
-        containerColor = Color(236,236,236)
-    ) {
-        LazyColumn (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(it)
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 10.dp)
-        ){
-            items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo , navController = navController)
-            }
+            Text(text = "No doctors saved")
         }
     }
+
+
 }
 
-@Composable
-fun Internists(
-    modifier: Modifier = Modifier,
-    doctors : List<DoctorInfo>,
-    navController : NavHostController
-) {
-    val scope = rememberCoroutineScope()
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            navController.navigate(Routes.HomeScreen.route)
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.padding(horizontal = 10.dp)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    navigationIconContentColor = Color.Black,
-                    containerColor = Color(236,236,236)
-                )
-
-            )
-        },
-        containerColor = Color(236,236,236)
-    ) {
-        LazyColumn (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(it)
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 10.dp)
-        ){
-            items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo , navController = navController)
-            }
-        }
-    }
-}
-
-@Composable
-fun AllDoctors(
-    modifier: Modifier = Modifier,
-    doctors: List<DoctorInfo>,
-    navController : NavHostController
-) {
-    val scope = rememberCoroutineScope()
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            navController.navigate(Routes.HomeScreen.route)
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.padding(horizontal = 10.dp)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    navigationIconContentColor = Color.Black,
-                    containerColor = Color(236,236,236)
-                )
-
-            )
-        },
-        containerColor = Color(236,236,236)
-    ) {
-        LazyColumn (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(it)
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 10.dp)
-        ){
-            items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo , navController = navController)
-            }
-        }
-    }
-}
-@Composable
-fun AllTopRatedDoctors(
-    modifier: Modifier = Modifier,
-    doctors: List<DoctorInfo>,
-    navController : NavHostController
-) {
-    val scope = rememberCoroutineScope()
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        scope.launch {
-                            navController.navigate(Routes.HomeScreen.route)
-                        }
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = null,
-                            modifier = Modifier.padding(horizontal = 10.dp)
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    navigationIconContentColor = Color.Black,
-                    containerColor = Color(236,236,236)
-                )
-
-            )
-        },
-        containerColor = Color(236,236,236)
-    ) {
-        LazyColumn (
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(it)
-                .padding(horizontal = 20.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 10.dp)
-        ){
-            items(doctors){ doctorInfo ->
-                doctorCard(info = doctorInfo , navController = navController)
-            }
-        }
-    }
-}

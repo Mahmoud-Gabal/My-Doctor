@@ -44,7 +44,7 @@ fun DropdownMenuNoPaddingVeitical(
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
     offset: DpOffset = DpOffset(0.dp, 0.dp),
-    properties: PopupProperties = PopupProperties(focusable = true),
+    properties: PopupProperties = PopupProperties(focusable = false),
     content: @Composable ColumnScope.() -> Unit
 ) {
     val expandedStates = remember { MutableTransitionState(false) }
