@@ -38,7 +38,7 @@ class NewsViewModel @Inject constructor(
     fun refresh(){
         viewModelScope.launch{
             _isRefreshing.value = true
-            delay(2000)
+            delay(3000)
              getNews()
             _isRefreshing.value = false
         }
