@@ -56,11 +56,11 @@ fun doctorCard(
             .fillMaxWidth()
             .clip(RoundedCornerShape(23.dp))
             .background(Color.White)
-            .padding(12.dp)
             .clickable {
                 navController.navigate(Routes.AboutDoctor.route
                         +"/${info.name}/${info.job}/${info.stars}/${info.reviews}/${info.exp}/${info.about}/${info.img}/${info.address}")
             }
+            .padding(12.dp)
         ,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -123,11 +123,11 @@ fun savedDoctorCard(
             .fillMaxWidth()
             .clip(RoundedCornerShape(23.dp))
             .background(Color.White)
-            .padding(12.dp)
             .clickable {
                 navController.navigate(Routes.AboutDoctor.route
                         +"/${info.name}/${info.job}/${info.stars}/${info.reviews}/${info.exp}/${info.about}/${info.img}/${info.address}")
             }
+            .padding(12.dp)
         ,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp)

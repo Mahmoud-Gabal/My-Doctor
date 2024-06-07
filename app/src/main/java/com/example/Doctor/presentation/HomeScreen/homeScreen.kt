@@ -108,6 +108,7 @@ import com.example.Doctor.data.local.doctors.RheumatologistsList
 import com.example.Doctor.domain.remote.NewsRepo
 import com.example.Doctor.presentation.NavGraph.Routes
 import com.example.Doctor.presentation.NewsPaperPage.NewsPapaerPage
+import com.example.Doctor.presentation.NewsPaperPage.errorPage
 import com.example.Doctor.presentation.NewsPaperPage.shimmerPage
 import com.example.Doctor.presentation.SavedDoctorPage.savedDoctorsPage
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.UserData
@@ -497,18 +498,7 @@ fun basicHomeScreen(
                     val uiState = newsModel.uiState
                     when(uiState){
                         newsEvents.Error -> {
-                            Column(
-                                modifier = Modifier.fillMaxSize(),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.warning),
-                                    contentDescription = null
-                                )
-                                Text(text = "Error")
-                            }
-
+                            errorPage()
                         }
                         newsEvents.loading -> shimmerPage()
                         is newsEvents.success -> NewsPapaerPage(article = uiState.article, navController = navController)

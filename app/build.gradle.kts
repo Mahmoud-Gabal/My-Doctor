@@ -117,4 +117,7 @@ dependencies {
 //    for coil (for loading img from url)
     implementation("io.coil-kt:coil-compose:2.6.0")
 
+//    for swipe Rsfreshing
+    implementation("androidx.compose.material:material:1.6.7")
+
  }

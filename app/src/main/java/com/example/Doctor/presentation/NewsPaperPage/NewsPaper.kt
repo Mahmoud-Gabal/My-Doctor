@@ -23,14 +23,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Downloading
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarOutline
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,6 +61,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
@@ -66,6 +74,7 @@ import com.example.Doctor.data.remote.Data.ArticleX
 import com.example.Doctor.data.remote.Data.SourceName
 import com.example.Doctor.presentation.HomeScreen.savedDoctorCard
 import com.example.Doctor.presentation.NavGraph.Routes
+import com.example.Doctor.presentation.ViewModels.NewsViewModel
 
 @Preview(showBackground = true)
 @Composable
@@ -119,6 +128,14 @@ fun NewsCard(
                 contentDescription = null,
                 error = {
                     Icon(painter = painterResource(id = R.drawable.warning), contentDescription = null)
+                },
+                loading = {
+                    Box(
+                        modifier = Modifier
+                            .size(130.dp)
+                            .clip(RoundedCornerShape(23.dp))
+                            .background(Color(0xFFB8B5B5))
+                    )
                 }
             )
         }
@@ -151,31 +168,54 @@ fun NewsCard(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NewsPapaerPage(
     modifier: Modifier = Modifier,
     article: Article,
     navController: NavHostController
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-    ){
-        Text(text = "Todays' News", fontSize = 25.sp, fontWeight = FontWeight.SemiBold, color = colorResource(id = R.color.darkBlue))
-        Text(text = "${article.totalResults} Results found : ",modifier = Modifier.padding(vertical = 3.dp))
-        LazyColumn(
-//            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(top = 10.dp, bottom = 70.dp)
+    Column(modifier = Modifier.fillMaxSize()){
+        Text(
+            text = "Todays' News",
+            fontSize = 25.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = colorResource(id = R.color.darkBlue)
+        )
+        Text(
+            text = "${article.totalResults} Results found : ",
+            modifier = Modifier.padding(vertical = 3.dp)
+        )
+        val newsViewModel : NewsViewModel = hiltViewModel()
+        val isRefreshing = newsViewModel.isRefreshing.collectAsState()
+        val refreshState = rememberPullRefreshState(refreshing = isRefreshing.value, onRefresh = { newsViewModel.refresh() })
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .pullRefresh(refreshState)
         ) {
-            items(article.articles) { articlex ->
-                NewsCard(
-                    articleX = articlex,
-                    navController = navController,
-                    modifier = Modifier.padding(bottom = 12.dp)
-                )
+            LazyColumn(
+                contentPadding = PaddingValues(top = 10.dp, bottom = 70.dp)
+            ) {
+                items(article.articles) { articlex ->
+                    NewsCard(
+                        articleX = articlex,
+                        navController = navController,
+                        modifier = Modifier.padding(bottom = 12.dp)
+                    )
+                }
             }
+            PullRefreshIndicator(
+                refreshing = isRefreshing.value,
+                state = refreshState,
+                modifier = Modifier.align(
+                    Alignment.TopCenter)
+            )
+
         }
     }
+
 }
 
 @Composable
@@ -242,12 +282,18 @@ fun shimmerCard(modifier: Modifier = Modifier) {
 
 @Composable
 fun shimmerPage(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
     ){
+        Text(
+            text = "Todays' News",
+            fontSize = 25.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = colorResource(id = R.color.darkBlue)
+        )
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(top = 10.dp, bottom = 70.dp)
@@ -255,6 +301,34 @@ fun shimmerPage(
             items(10) { shimmerCard ->
                 shimmerCard()
             }
+        }
+    }
+}
+
+@Composable
+fun errorPage(
+    modifier: Modifier = Modifier,
+) {
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Text(
+            text = "Todays' News",
+            fontSize = 25.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = colorResource(id = R.color.darkBlue),
+            modifier = Modifier.align(Alignment.TopStart)
+        )
+        Column(
+            modifier = Modifier.align(Alignment.Center)
+        ){
+            Icon(
+                painter = painterResource(id = R.drawable.warning),
+                contentDescription = null
+            )
+            Text(text = "Error")
         }
     }
 }

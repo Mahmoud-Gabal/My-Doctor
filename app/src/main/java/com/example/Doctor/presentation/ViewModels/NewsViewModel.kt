@@ -9,6 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.Doctor.data.remote.Data.Article
 import com.example.Doctor.domain.remote.UseCases.GetNewsCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,11 +28,23 @@ class NewsViewModel @Inject constructor(
     var uiState : newsEvents by mutableStateOf(newsEvents.loading)
     private set
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing = _isRefreshing.asStateFlow()
+
     init {
         getNews()
     }
 
+    fun refresh(){
+        viewModelScope.launch{
+            _isRefreshing.value = true
+            delay(2000)
+             getNews()
+            _isRefreshing.value = false
+        }
+    }
     fun getNews(){
+        uiState = newsEvents.loading
         viewModelScope.launch {
             try {
                 val news = neweCase()
