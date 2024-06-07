@@ -105,10 +105,16 @@ import com.example.Doctor.data.local.doctors.OculistsList
 import com.example.Doctor.data.local.doctors.PediatriciansList
 import com.example.Doctor.data.local.doctors.PsychologistsList
 import com.example.Doctor.data.local.doctors.RheumatologistsList
+import com.example.Doctor.domain.remote.NewsRepo
 import com.example.Doctor.presentation.NavGraph.Routes
+import com.example.Doctor.presentation.NewsPaperPage.NewsPapaerPage
+import com.example.Doctor.presentation.NewsPaperPage.shimmerPage
+import com.example.Doctor.presentation.SavedDoctorPage.savedDoctorsPage
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.UserData
 import com.example.Doctor.presentation.ViewModels.BookViewModel
 import com.example.Doctor.presentation.ViewModels.MainViewModel
+import com.example.Doctor.presentation.ViewModels.NewsViewModel
+import com.example.Doctor.presentation.ViewModels.newsEvents
 import kotlinx.coroutines.launch
 
 
@@ -121,6 +127,7 @@ fun homeScreen(
     navController: NavHostController = rememberNavController(),
     userData: UserData? = null,
     onSignOut: () -> Unit = {}
+
 ) {
 
     val drawerstate = rememberDrawerState(initialValue = DrawerValue.Closed)
@@ -480,21 +487,31 @@ fun basicHomeScreen(
                 }
 
                 3 -> {
-                    val bookViewModel : BookViewModel = hiltViewModel()
-                    val bookedList = bookViewModel.bookedList.collectAsState()
                     savedDoctorsPage(
-                        doctors = bookedList.value,
                         navController = navController
                     )
                 }
 
                 4 -> {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(text = "NewsPaper")
+                    val newsModel : NewsViewModel = hiltViewModel()
+                    val uiState = newsModel.uiState
+                    when(uiState){
+                        newsEvents.Error -> {
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.warning),
+                                    contentDescription = null
+                                )
+                                Text(text = "Error")
+                            }
+
+                        }
+                        newsEvents.loading -> shimmerPage()
+                        is newsEvents.success -> NewsPapaerPage(article = uiState.article, navController = navController)
                     }
                 }
             }

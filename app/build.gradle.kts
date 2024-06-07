@@ -110,6 +110,11 @@ dependencies {
 // Room Db
     implementation("androidx.room:room-ktx:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
+//  Retrofit and GsonConvertor
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
+//    for coil (for loading img from url)
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
  }

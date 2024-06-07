@@ -43,11 +43,11 @@ import com.example.Doctor.presentation.HomeScreen.aboutDoctor
 import com.example.Doctor.presentation.HomeScreen.doctorsPage
 import com.example.Doctor.presentation.HomeScreen.getTopRated
 import com.example.Doctor.presentation.HomeScreen.homeScreen
-import com.example.Doctor.presentation.HomeScreen.savedDoctorsPage
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.GoogleAuthUiClient
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.SignInViewModel
 import com.example.Doctor.presentation.SignInScreen.signInScreen
 import com.example.Doctor.presentation.SignUpScreen.signUpScreen
+import com.example.Doctor.presentation.ViewModels.NewsViewModel
 import com.example.Doctor.presentation.onBOardingScreen.OnBoardingScreen
 import com.example.Doctor.presentation.onBOardingScreen.onBoardingViewModel
 import kotlinx.coroutines.launch
@@ -194,7 +194,7 @@ fun NavGraph(
                  doctorsPage(doctors = AllDoctorsList, navController = navController)
              }
              composable(route = Routes.savedDocotrsScreen.route){
-                 savedDoctorsPage(doctors = listOf<bookmarkedDRs>() , navController = navController)
+//                 savedDoctorsPage(doctors = listOf<bookmarkedDRs>() , navController = navController)
              }
              composable(
                  route = Routes.AboutDoctor.route + "/{name}/{job}/{stars}/{reviews}/{exp}/{about}/{img}/{address}",
