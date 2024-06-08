@@ -280,6 +280,7 @@ fun shimmerCard(modifier: Modifier = Modifier) {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun shimmerPage(
     modifier: Modifier = Modifier,
@@ -294,42 +295,76 @@ fun shimmerPage(
             fontWeight = FontWeight.SemiBold,
             color = colorResource(id = R.color.darkBlue)
         )
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(top = 10.dp, bottom = 70.dp)
+        val newsViewModel : NewsViewModel = hiltViewModel()
+        val isRefreshing = newsViewModel.isRefreshing.collectAsState()
+        val refreshState = rememberPullRefreshState(refreshing = isRefreshing.value, onRefresh = { newsViewModel.refresh() })
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .pullRefresh(refreshState)
         ) {
-            items(10) { shimmerCard ->
-                shimmerCard()
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(top = 10.dp, bottom = 70.dp)
+            ) {
+                items(10) { shimmerCard ->
+                    shimmerCard()
+                }
             }
+            PullRefreshIndicator(
+                refreshing = isRefreshing.value,
+                state = refreshState,
+                modifier = Modifier.align(
+                    Alignment.TopCenter)
+            )
         }
+
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun errorPage(
     modifier: Modifier = Modifier,
 ) {
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
+    Column(modifier = Modifier.fillMaxSize()){
         Text(
             text = "Todays' News",
             fontSize = 25.sp,
             fontWeight = FontWeight.SemiBold,
-            color = colorResource(id = R.color.darkBlue),
-            modifier = Modifier.align(Alignment.TopStart)
+            color = colorResource(id = R.color.darkBlue)
         )
-        Column(
-            modifier = Modifier.align(Alignment.Center)
-        ){
-            Icon(
-                painter = painterResource(id = R.drawable.warning),
-                contentDescription = null
+        val newsViewModel : NewsViewModel = hiltViewModel()
+        val isRefreshing = newsViewModel.isRefreshing.collectAsState()
+        val refreshState = rememberPullRefreshState(refreshing = isRefreshing.value, onRefresh = { newsViewModel.refresh() })
+        Box(
+            modifier = modifier
+                .fillMaxWidth()
+                .weight(1f)
+                .pullRefresh(refreshState)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.warning),
+                    contentDescription = null,
+                )
+                Text(text = "Error")
+            }
+
+            PullRefreshIndicator(
+                refreshing = isRefreshing.value,
+                state = refreshState,
+                modifier = Modifier.align(
+                    Alignment.TopCenter)
             )
-            Text(text = "Error")
         }
+
     }
 }
 

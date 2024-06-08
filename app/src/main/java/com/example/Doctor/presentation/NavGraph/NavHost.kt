@@ -36,6 +36,7 @@ import com.example.Doctor.data.local.doctors.PsychiatristsList
 import com.example.Doctor.data.local.doctors.PsychologistsList
 import com.example.Doctor.data.local.doctors.RheumatologistsList
 import com.example.Doctor.domain.local.db.bookmarkedDRs
+import com.example.Doctor.presentation.ArticlePage.articlePage
 import com.example.Doctor.presentation.EmailCreatedScreen.createdEmailScreen
 import com.example.Doctor.presentation.ForgotPassword.forgotPasswordScreen
 import com.example.Doctor.presentation.HomeScreen.DoctorInfo
@@ -193,8 +194,8 @@ fun NavGraph(
              composable(route = Routes.AllDoctorsScreen.route){
                  doctorsPage(doctors = AllDoctorsList, navController = navController)
              }
-             composable(route = Routes.savedDocotrsScreen.route){
-//                 savedDoctorsPage(doctors = listOf<bookmarkedDRs>() , navController = navController)
+             composable(route = Routes.articleScreen.route){
+                 articlePage()
              }
              composable(
                  route = Routes.AboutDoctor.route + "/{name}/{job}/{stars}/{reviews}/{exp}/{about}/{img}/{address}",

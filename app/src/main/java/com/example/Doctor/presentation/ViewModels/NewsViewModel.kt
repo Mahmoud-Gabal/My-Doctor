@@ -10,8 +10,11 @@ import com.example.Doctor.data.remote.Data.Article
 import com.example.Doctor.domain.remote.UseCases.GetNewsCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,12 +41,27 @@ class NewsViewModel @Inject constructor(
     fun refresh(){
         viewModelScope.launch{
             _isRefreshing.value = true
-            delay(3000)
-             getNews()
+            if (uiState == newsEvents.Error || uiState == newsEvents.loading){
+                reloadNews()
+            }else{
+                getNews()
+            }
+            getNews()
             _isRefreshing.value = false
         }
     }
     fun getNews(){
+        viewModelScope.launch {
+            try {
+                val news = neweCase()
+                uiState = newsEvents.success(news)
+            }catch (e : Exception){
+                Log.d("NewsError",e.message.toString())
+                uiState = newsEvents.Error
+            }
+        }
+    }
+    fun reloadNews(){
         uiState = newsEvents.loading
         viewModelScope.launch {
             try {
