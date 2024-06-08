@@ -1,11 +1,9 @@
 package com.example.Doctor.presentation.NewsPaperPage
 
-import android.graphics.Paint.Align
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,17 +18,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Downloading
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -49,7 +42,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
@@ -62,29 +54,37 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.example.Doctor.R
 import com.example.Doctor.data.remote.Data.Article
 import com.example.Doctor.data.remote.Data.ArticleX
 import com.example.Doctor.data.remote.Data.SourceName
-import com.example.Doctor.presentation.HomeScreen.savedDoctorCard
 import com.example.Doctor.presentation.NavGraph.Routes
 import com.example.Doctor.presentation.ViewModels.NewsViewModel
+import com.example.Doctor.presentation.ViewModels.sharedDataViewModel
 
 @Preview(showBackground = true)
 @Composable
 fun NewsCard(
     modifier: Modifier = Modifier,
-    articleX: ArticleX = ArticleX("farid diab","","","2024-22-22-34567:45.38z",
-        SourceName(null,"Fox News"),"fdsdfs fdsfsf fs  gdgfsfsf  g fdg fsfsfsfsfs  g gdsfgsdfsfsfsfsf  g d gds f sdfsarghthrhbss  gt h b gre r r fr fsfsfsdfsfsdadaad ","fdssd","fdsff"
+    articleX: ArticleX = ArticleX(
+        "farid diab",
+        "",
+        "",
+        "2024-22-22-34567:45.38z",
+        SourceName(null, "Fox News"),
+        "fdsdfs fdsfsf fs  gdgfsfsf  g fdg fsfsfsfsfs  g gdsfgsdfsfsfsfsf  g d gds f sdfsarghthrhbss  gt h b gre r r fr fsfsfsdfsfsdadaad ",
+        "fdssd",
+        "fdsff"
     ),
-    navController : NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    sharedDataViewModel: sharedDataViewModel = viewModel(),
 ) {
+
     if (articleX.title == "[Removed]"){
         return
     }
@@ -95,6 +95,8 @@ fun NewsCard(
             .clip(RoundedCornerShape(23.dp))
             .background(Color.White)
             .clickable {
+                sharedDataViewModel.passArticlex(articleX = articleX)
+                navController.navigate(Routes.articleScreen.route)
             }
         ,
 //        verticalAlignment = Alignment.CenterVertically,
@@ -107,7 +109,7 @@ fun NewsCard(
                 .background(Color(0xFFB8B5B5))
             ){
                 Text(
-                    text = articleX.source.name,
+                    text = articleX.source?.name!!,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = colorResource(id = R.color.darkBlue),
@@ -144,7 +146,7 @@ fun NewsCard(
             .fillMaxHeight()
             .padding(end = 12.dp, top = 5.dp, bottom = 5.dp)) {
             Text(
-                text = if(articleX.title.length > 80) articleX.title.substring(0,80)+"...." else articleX.title,
+                text = if(articleX.title?.length!! > 80) articleX.title.substring(0,80) +"...." else articleX.title,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = colorResource(id = R.color.darkBlue)
@@ -154,9 +156,9 @@ fun NewsCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
-                Text(text = articleX.source.name,fontSize = 10.sp, modifier = Modifier.weight(1.5f),lineHeight = 12.sp)
+                Text(text = articleX.source?.name!!,fontSize = 10.sp, modifier = Modifier.weight(1.5f),lineHeight = 12.sp)
                 Text(
-                    text = articleX.publishedAt.substringBefore("T"),
+                    text = articleX.publishedAt?.substringBefore("T")!!,
                     fontSize = 10.sp,
                     modifier = Modifier.weight(1f),
                     lineHeight = 12.sp,
@@ -173,7 +175,8 @@ fun NewsCard(
 fun NewsPapaerPage(
     modifier: Modifier = Modifier,
     article: Article,
-    navController: NavHostController
+    navController: NavHostController,
+    sharedDataViewModel: sharedDataViewModel,
 ) {
     Column(modifier = Modifier.fillMaxSize()){
         Text(
@@ -202,7 +205,8 @@ fun NewsPapaerPage(
                     NewsCard(
                         articleX = articlex,
                         navController = navController,
-                        modifier = Modifier.padding(bottom = 12.dp)
+                        modifier = Modifier.padding(bottom = 12.dp),
+                       sharedDataViewModel = sharedDataViewModel
                     )
                 }
             }
@@ -346,7 +350,9 @@ fun errorPage(
                 .pullRefresh(refreshState)
         ) {
             Column(
-                modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {

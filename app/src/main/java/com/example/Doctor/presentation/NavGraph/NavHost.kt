@@ -35,7 +35,6 @@ import com.example.Doctor.data.local.doctors.PediatriciansList
 import com.example.Doctor.data.local.doctors.PsychiatristsList
 import com.example.Doctor.data.local.doctors.PsychologistsList
 import com.example.Doctor.data.local.doctors.RheumatologistsList
-import com.example.Doctor.domain.local.db.bookmarkedDRs
 import com.example.Doctor.presentation.ArticlePage.articlePage
 import com.example.Doctor.presentation.EmailCreatedScreen.createdEmailScreen
 import com.example.Doctor.presentation.ForgotPassword.forgotPasswordScreen
@@ -48,7 +47,7 @@ import com.example.Doctor.presentation.SignInScreen.GoogleAuth.GoogleAuthUiClien
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.SignInViewModel
 import com.example.Doctor.presentation.SignInScreen.signInScreen
 import com.example.Doctor.presentation.SignUpScreen.signUpScreen
-import com.example.Doctor.presentation.ViewModels.NewsViewModel
+import com.example.Doctor.presentation.ViewModels.sharedDataViewModel
 import com.example.Doctor.presentation.onBOardingScreen.OnBoardingScreen
 import com.example.Doctor.presentation.onBOardingScreen.onBoardingViewModel
 import kotlinx.coroutines.launch
@@ -63,6 +62,7 @@ fun NavGraph(
     context: Context
 ){
     val navController = rememberNavController()
+    val sharedDataViewModel : sharedDataViewModel = viewModel()
      NavHost(navController = navController, startDestination = startDestination) {
          navigation(route = Routes.App_OnBoard.route, startDestination =Routes.BoardingScreen.route ){
              composable(route = Routes.BoardingScreen.route){
@@ -151,7 +151,8 @@ fun NavGraph(
                              ).show()
 
                          }
-                     }
+                     },
+                     sharedDataViewModel = sharedDataViewModel
                  )
 
              }
@@ -195,7 +196,7 @@ fun NavGraph(
                  doctorsPage(doctors = AllDoctorsList, navController = navController)
              }
              composable(route = Routes.articleScreen.route){
-                 articlePage()
+                 articlePage(navController = navController, sharedDataViewModel = sharedDataViewModel)
              }
              composable(
                  route = Routes.AboutDoctor.route + "/{name}/{job}/{stars}/{reviews}/{exp}/{about}/{img}/{address}",

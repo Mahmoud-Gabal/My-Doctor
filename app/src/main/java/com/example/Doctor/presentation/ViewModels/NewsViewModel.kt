@@ -44,6 +44,7 @@ class NewsViewModel @Inject constructor(
             if (uiState == newsEvents.Error || uiState == newsEvents.loading){
                 reloadNews()
             }else{
+                delay(1000)
                 getNews()
             }
             getNews()

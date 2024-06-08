@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -41,7 +40,6 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Logout
 import androidx.compose.material.icons.outlined.Message
 import androidx.compose.material.icons.outlined.Newspaper
-import androidx.compose.material3.DrawerDefaults
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -60,8 +58,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -73,13 +69,11 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -105,17 +99,15 @@ import com.example.Doctor.data.local.doctors.OculistsList
 import com.example.Doctor.data.local.doctors.PediatriciansList
 import com.example.Doctor.data.local.doctors.PsychologistsList
 import com.example.Doctor.data.local.doctors.RheumatologistsList
-import com.example.Doctor.domain.remote.NewsRepo
 import com.example.Doctor.presentation.NavGraph.Routes
 import com.example.Doctor.presentation.NewsPaperPage.NewsPapaerPage
 import com.example.Doctor.presentation.NewsPaperPage.errorPage
 import com.example.Doctor.presentation.NewsPaperPage.shimmerPage
 import com.example.Doctor.presentation.SavedDoctorPage.savedDoctorsPage
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.UserData
-import com.example.Doctor.presentation.ViewModels.BookViewModel
-import com.example.Doctor.presentation.ViewModels.MainViewModel
 import com.example.Doctor.presentation.ViewModels.NewsViewModel
 import com.example.Doctor.presentation.ViewModels.newsEvents
+import com.example.Doctor.presentation.ViewModels.sharedDataViewModel
 import kotlinx.coroutines.launch
 
 
@@ -127,7 +119,8 @@ fun homeScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     userData: UserData? = null,
-    onSignOut: () -> Unit = {}
+    onSignOut: () -> Unit = {},
+    sharedDataViewModel: sharedDataViewModel = viewModel()
 
 ) {
 
@@ -262,7 +255,8 @@ fun homeScreen(
             basicHomeScreen(
                 paddingValues = it,
                 userData = userData,
-                navController = navController
+                navController = navController,
+                sharedDataViewModel = sharedDataViewModel
             )
         }
 
@@ -271,67 +265,6 @@ fun homeScreen(
 
 }
 
-//Row(
-//modifier = Modifier.padding(horizontal = 20.dp)
-//.height(60.dp)
-//.align(Alignment.BottomCenter)
-//.clip(RoundedCornerShape(16.dp))
-//.background(colorResource(id = R.color.darkBlue)),
-//verticalAlignment = Alignment.CenterVertically,
-//) {
-//    var selectedIndex by rememberSaveable {
-//        mutableStateOf(1)
-//    }
-//    var navList = (1..5).toList()
-//    var filled = listOf(
-//        Icons.Filled.Home,
-//        Icons.Filled.Message,
-//        Icons.Filled.CalendarMonth,
-//        Icons.Filled.Bookmark,
-//        Icons.Filled.Newspaper,
-//    )
-//    var outlined = listOf(
-//        Icons.Outlined.Home,
-//        Icons.Outlined.Message,
-//        Icons.Outlined.CalendarMonth,
-//        Icons.Outlined.BookmarkBorder,
-//        Icons.Outlined.Newspaper,
-//    )
-//    navList.forEachIndexed { index, i ->
-//        FloatingActionButton(
-//            onClick = { selectedIndex = navList[index] },
-//            modifier = Modifier
-//                .weight(1f)
-//                .fillMaxHeight(),
-//            containerColor = Color.Transparent,
-//        ) {
-//            if (navList[index] == selectedIndex) {
-//                Icon(
-//                    tint = Color.White,
-//                    imageVector = filled[index],
-//                    contentDescription = null,
-//                    modifier = Modifier
-//                        .customShadow(
-//                            color = Color(255, 255, 255, alpha = 0x53),
-//                            borderRadius = 12.dp,
-//                            spread = 50.dp,
-//                            blurRadius = 0.dp,
-//                            offsetY = 0.dp
-//                        )
-//                        .shadow(10.dp, spotColor = Color.White,)
-//
-//                )
-//            } else {
-//                Icon(
-//                    tint = colorResource(id = R.color.DarkblueGrey),
-//                    imageVector = outlined[index],
-//                    contentDescription = null,
-//                )
-//            }
-//
-//        }
-//    }
-//}
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun basicHomeScreen(
@@ -339,6 +272,7 @@ fun basicHomeScreen(
     paddingValues: PaddingValues,
     userData: UserData? = null,
     navController: NavHostController,
+    sharedDataViewModel : sharedDataViewModel
 ) {
     Box(
         modifier = Modifier
@@ -501,7 +435,7 @@ fun basicHomeScreen(
                             errorPage()
                         }
                         newsEvents.loading -> shimmerPage()
-                        is newsEvents.success -> NewsPapaerPage(article = uiState.article, navController = navController)
+                        is newsEvents.success -> NewsPapaerPage(article = uiState.article, navController = navController, sharedDataViewModel = sharedDataViewModel )
                     }
                 }
             }
