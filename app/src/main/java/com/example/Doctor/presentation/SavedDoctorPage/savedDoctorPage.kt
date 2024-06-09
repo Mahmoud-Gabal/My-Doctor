@@ -1,12 +1,17 @@
 package com.example.Doctor.presentation.SavedDoctorPage
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,6 +19,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -41,25 +48,32 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.Doctor.R
+import com.example.Doctor.presentation.HomeScreen.filterBooking
 import com.example.Doctor.presentation.HomeScreen.savedDoctorCard
 import com.example.Doctor.presentation.HomeScreen.shimmerDoctorCard
 import com.example.Doctor.presentation.NewsPaperPage.shimmerCard
+import com.example.Doctor.presentation.NewsPaperPage.shimmerEffect
 import com.example.Doctor.presentation.ViewModels.BookViewModel
+import com.example.Doctor.presentation.ViewModels.BookingEvents
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@Preview
 @Composable
 fun savedDoctorsPage(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
-    bookViewModel: BookViewModel
+    navController: NavHostController = rememberNavController(),
+    bookViewModel: BookViewModel = viewModel()
 ) {
     val bookModel = bookViewModel
     val searchText = bookModel.searchingText.collectAsState()
@@ -113,7 +127,14 @@ fun savedDoctorsPage(
                 contentPadding = PaddingValues(top = 10.dp, bottom = 70.dp)
             ) {
                 items(10) { shimmerDoctorCard ->
-                    shimmerDoctorCard()
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        shimmerDoctorCard()
+                        Box(modifier = Modifier.size(20.dp).shimmerEffect())
+                    }
                 }
             }
 
@@ -124,7 +145,27 @@ fun savedDoctorsPage(
                     contentPadding = PaddingValues(top = 10.dp, bottom = 70.dp)
                 ) {
                     items(doctors) { doctorInfo ->
-                        savedDoctorCard(info = doctorInfo, navController = navController)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            savedDoctorCard(info = doctorInfo, navController = navController)
+                            Icon(
+                                modifier = Modifier
+                                    .size(35.dp)
+                                    .clickable {
+                                        bookModel.onBookingEvent(
+                                            BookingEvents.cancelBookingDR(
+                                                doctorInfo
+                                            )
+                                        )
+                                    },
+                                imageVector = Icons.Filled.Delete,
+                                contentDescription = null,
+                                tint = colorResource(id = R.color.darkBlue),
+                            )
+                        }
                     }
                 }
             } else {

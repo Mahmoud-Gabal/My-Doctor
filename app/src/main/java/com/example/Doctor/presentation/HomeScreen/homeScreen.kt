@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -172,7 +173,7 @@ fun homeScreen(
                             Box(
                                 modifier = Modifier
                                     .size(50.dp)
-                                    .clip(RoundedCornerShape(6.dp))
+                                    .clip(RoundedCornerShape(20.dp))
                                     .background(Color.Gray)
                             )
                         }
@@ -213,12 +214,16 @@ fun homeScreen(
                             scope.launch {
                                 drawerstate.open()
                             }
-                        }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.menu),
-                                contentDescription = null,
-
+                        },
+                        ) {
+                            Row(modifier = Modifier.fillMaxSize(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ){
+                                Icon(
+                                    painter = painterResource(id = R.drawable.menu),
+                                    contentDescription = null,
                                 )
+                            }
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
@@ -232,17 +237,17 @@ fun homeScreen(
                                     model = userData.profilePictureUrl,
                                     contentDescription = "Profile picture",
                                     modifier = Modifier
-                                        .padding(horizontal = 20.dp)
+                                        .padding(end = 8.dp)
                                         .size(40.dp)
-                                        .clip(RoundedCornerShape(15.dp)),
+                                        .clip(RoundedCornerShape(12.dp)),
                                     contentScale = ContentScale.Crop
                                 )
                             } else {
                                 Box(
                                     modifier = Modifier
-                                        .padding(end = 20.dp)
+                                        .padding(end = 8.dp)
                                         .size(40.dp)
-                                        .clip(RoundedCornerShape(6.dp))
+                                        .clip(RoundedCornerShape(12.dp))
                                         .background(Color.Gray)
 
                                 )
@@ -283,7 +288,7 @@ fun basicHomeScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues)
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = 10.dp)
     ) {
 
         val pagerState = rememberPagerState (0){
@@ -394,7 +399,7 @@ fun basicHomeScreen(
                             }
                             Text(
                                 text = "Find the doctor nearest to your\nlocation",
-                                fontSize = 21.sp,
+                                fontSize = 19.sp,
                                 color = Color.White,
                                 modifier = Modifier.padding(horizontal = 20.dp)
                             )

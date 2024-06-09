@@ -129,7 +129,7 @@ fun aboutDoctor(
                                     .padding(end = 20.dp)
                                     .size(35.dp)
                                     .clickable {
-                                        bookViewModel.onBookingEvent(
+                                        bookModel.onBookingEvent(
                                             BookingEvents.cancelBookingDR(
                                                 filterBooking(bookedList.value!!, booked_info)[0]
                                             )
@@ -145,7 +145,7 @@ fun aboutDoctor(
                                 .padding(end = 20.dp)
                                 .size(35.dp)
                                 .clickable {
-                                    bookViewModel.onBookingEvent(
+                                    bookModel.onBookingEvent(
                                         BookingEvents.bookDR(
                                             booked_info
                                         )

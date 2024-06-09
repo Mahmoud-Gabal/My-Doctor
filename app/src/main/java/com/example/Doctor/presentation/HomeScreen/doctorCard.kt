@@ -125,7 +125,7 @@ fun savedDoctorCard(
     }
     Row (
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(.9f)
             .clip(RoundedCornerShape(23.dp))
             .background(Color.White)
             .clickable {
@@ -176,7 +176,7 @@ fun savedDoctorCard(
             contentDescription = null,
             tint = colorResource(id = R.color.splashBackgroundTr),
             modifier = Modifier
-                .padding(start = 23.dp)
+                .padding(start = 0.dp)
                 .size(30.dp)
         )
     }
@@ -190,7 +190,7 @@ fun shimmerDoctorCard(
 {
     Row (
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth(.9f)
             .clip(RoundedCornerShape(23.dp))
             .background(Color.White)
             .padding(12.dp)
