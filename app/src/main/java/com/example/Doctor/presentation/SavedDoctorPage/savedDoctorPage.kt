@@ -62,89 +62,86 @@ fun savedDoctorsPage(
     bookViewModel: BookViewModel
 ) {
     val bookModel = bookViewModel
-    val bookedList = bookModel.bookedList.collectAsState()
+    val searchText = bookModel.searchingText.collectAsState()
+    val bookedList = bookModel.filtered_list.collectAsState()
     val doctors = bookedList.value
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+    ) {
 
-            Column(
-                modifier = modifier
-                    .fillMaxSize()
-            ) {
-                var searchText by rememberSaveable {
-                    mutableStateOf("")
-                }
-                val focusManager = LocalFocusManager.current
-                TextField(
-                    value = searchText,
-                    onValueChange = {
-                        searchText = it
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .clip(RoundedCornerShape(20.dp)),
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                    keyboardActions = KeyboardActions(onSearch = {
-                        focusManager.clearFocus()
-                    }), placeholder = {
-                        Text(text = "Search", color = colorResource(id = R.color.blueGrey))
-                    },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Filled.Search,
-                            contentDescription = null,
-                            tint = colorResource(id = R.color.blueGrey)
-                        )
-                    },
-                    colors = TextFieldDefaults.colors(
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        errorIndicatorColor = Color.Transparent,
-                        unfocusedContainerColor = colorResource(id = R.color.searchBar),
-                        focusedContainerColor = colorResource(id = R.color.searchBar),
-                        errorContainerColor = colorResource(id = R.color.searchBar),
-                        cursorColor = Color.White,
-                        errorCursorColor = Color.White,
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        errorTextColor = Color.White
-                    )
+        val focusManager = LocalFocusManager.current
+        TextField(
+            value = searchText.value,
+            onValueChange = {
+                bookModel.changeSearchTextTo(it)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .clip(RoundedCornerShape(20.dp)),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+            keyboardActions = KeyboardActions(onSearch = {
+                focusManager.clearFocus()
+            }), placeholder = {
+                Text(text = "Search", color = colorResource(id = R.color.blueGrey))
+            },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = null,
+                    tint = colorResource(id = R.color.blueGrey)
                 )
-                if (doctors == null){
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(12.dp),
-                        contentPadding = PaddingValues(top = 10.dp, bottom = 70.dp)
-                    ) {
-                        items(10) { shimmerDoctorCard ->
-                            shimmerDoctorCard()
-                        }
-                    }
-
-                }else{
-                    if (doctors.isNotEmpty()){
-                        LazyColumn(
-                            verticalArrangement = Arrangement.spacedBy(12.dp),
-                            contentPadding = PaddingValues(top = 10.dp, bottom = 70.dp)
-                        ) {
-                            items(doctors) { doctorInfo ->
-                                savedDoctorCard(info = doctorInfo, navController = navController)
-                            }
-                        }
-                    }else{
-                        Column(
-                            modifier = Modifier.fillMaxSize(),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-
-                            Text(text = "No doctors saved")
-
-
-                        }
-                    }
+            },
+            colors = TextFieldDefaults.colors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Color.Transparent,
+                unfocusedContainerColor = colorResource(id = R.color.searchBar),
+                focusedContainerColor = colorResource(id = R.color.searchBar),
+                errorContainerColor = colorResource(id = R.color.searchBar),
+                cursorColor = Color.White,
+                errorCursorColor = Color.White,
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
+                errorTextColor = Color.White
+            )
+        )
+        if (doctors == null) {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                contentPadding = PaddingValues(top = 10.dp, bottom = 70.dp)
+            ) {
+                items(10) { shimmerDoctorCard ->
+                    shimmerDoctorCard()
                 }
-
             }
 
+        } else {
+            if (doctors.isNotEmpty()) {
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
+                    contentPadding = PaddingValues(top = 10.dp, bottom = 70.dp)
+                ) {
+                    items(doctors) { doctorInfo ->
+                        savedDoctorCard(info = doctorInfo, navController = navController)
+                    }
+                }
+            } else {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Text(text = "No doctors found")
+
+
+                }
+            }
+        }
+
+    }
 
 
 }

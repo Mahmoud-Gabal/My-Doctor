@@ -122,7 +122,7 @@ fun aboutDoctor(
                 ),
                 actions = {
                     val bookModel = bookViewModel
-                    val bookedList = bookModel.bookedList.collectAsState()
+                    val bookedList = bookModel.filtered_list.collectAsState()
                     if (filterBooking(bookedList.value!!,booked_info).isNotEmpty()){
                             Icon(
                                 modifier = Modifier

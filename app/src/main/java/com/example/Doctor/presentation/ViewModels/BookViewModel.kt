@@ -28,10 +28,16 @@ class BookViewModel @Inject constructor(
 ) : ViewModel() {
 
      val bookedList = dao.getAllBookemarkDrs()
-        .stateIn(
-        viewModelScope, SharingStarted.WhileSubscribed(5000), null
-    )
+//        .stateIn(
+//        viewModelScope, SharingStarted.WhileSubscribed(5000), null
+//    )
 
+    private val _searchingText = MutableStateFlow("")
+    val searchingText = _searchingText.asStateFlow()
+
+    val filtered_list = searchingText.combine(bookedList){searchingText,bookList ->
+        bookList?.filter { it.name.contains(searchingText,ignoreCase = true) }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000),null)
 
     fun onBookingEvent(event: BookingEvents){
         when(event){
@@ -46,6 +52,10 @@ class BookViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun changeSearchTextTo(text : String){
+        _searchingText.value = text
     }
 
 
