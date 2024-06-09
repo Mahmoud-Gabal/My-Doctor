@@ -105,9 +105,11 @@ import com.example.Doctor.presentation.NewsPaperPage.errorPage
 import com.example.Doctor.presentation.NewsPaperPage.shimmerPage
 import com.example.Doctor.presentation.SavedDoctorPage.savedDoctorsPage
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.UserData
+import com.example.Doctor.presentation.ViewModels.BookViewModel
 import com.example.Doctor.presentation.ViewModels.NewsViewModel
 import com.example.Doctor.presentation.ViewModels.newsEvents
 import com.example.Doctor.presentation.ViewModels.sharedDataViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -120,7 +122,8 @@ fun homeScreen(
     navController: NavHostController = rememberNavController(),
     userData: UserData? = null,
     onSignOut: () -> Unit = {},
-    sharedDataViewModel: sharedDataViewModel = viewModel()
+    sharedDataViewModel: sharedDataViewModel = viewModel(),
+    bookViewModel: BookViewModel = hiltViewModel()
 
 ) {
 
@@ -256,7 +259,8 @@ fun homeScreen(
                 paddingValues = it,
                 userData = userData,
                 navController = navController,
-                sharedDataViewModel = sharedDataViewModel
+                sharedDataViewModel = sharedDataViewModel,
+                bookViewModel = bookViewModel
             )
         }
 
@@ -272,7 +276,8 @@ fun basicHomeScreen(
     paddingValues: PaddingValues,
     userData: UserData? = null,
     navController: NavHostController,
-    sharedDataViewModel : sharedDataViewModel
+    sharedDataViewModel: sharedDataViewModel,
+    bookViewModel: BookViewModel
 ) {
     Box(
         modifier = Modifier
@@ -423,7 +428,8 @@ fun basicHomeScreen(
 
                 3 -> {
                     savedDoctorsPage(
-                        navController = navController
+                        navController = navController,
+                        bookViewModel = bookViewModel
                     )
                 }
 

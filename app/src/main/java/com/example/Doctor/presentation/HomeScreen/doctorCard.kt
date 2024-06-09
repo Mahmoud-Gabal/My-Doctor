@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,6 +41,8 @@ import com.example.Doctor.R
 import com.example.Doctor.domain.local.db.bookmarkedDRs
 
 import com.example.Doctor.presentation.NavGraph.Routes
+import com.example.Doctor.presentation.NewsPaperPage.shimmerEffect
+
 @Preview
 @Composable
 fun doctorCard(
@@ -57,8 +60,10 @@ fun doctorCard(
             .clip(RoundedCornerShape(23.dp))
             .background(Color.White)
             .clickable {
-                navController.navigate(Routes.AboutDoctor.route
-                        +"/${info.name}/${info.job}/${info.stars}/${info.reviews}/${info.exp}/${info.about}/${info.img}/${info.address}")
+                navController.navigate(
+                    Routes.AboutDoctor.route
+                            + "/${info.name}/${info.job}/${info.stars}/${info.reviews}/${info.exp}/${info.about}/${info.img}/${info.address}"
+                )
             }
             .padding(12.dp)
         ,
@@ -124,8 +129,10 @@ fun savedDoctorCard(
             .clip(RoundedCornerShape(23.dp))
             .background(Color.White)
             .clickable {
-                navController.navigate(Routes.AboutDoctor.route
-                        +"/${info.name}/${info.job}/${info.stars}/${info.reviews}/${info.exp}/${info.about}/${info.img}/${info.address}")
+                navController.navigate(
+                    Routes.AboutDoctor.route
+                            + "/${info.name}/${info.job}/${info.stars}/${info.reviews}/${info.exp}/${info.about}/${info.img}/${info.address}"
+                )
             }
             .padding(12.dp)
         ,
@@ -171,6 +178,59 @@ fun savedDoctorCard(
             modifier = Modifier
                 .padding(start = 23.dp)
                 .size(30.dp)
+        )
+    }
+}
+
+@Composable
+fun shimmerDoctorCard(
+    modifier: Modifier = Modifier,
+
+)
+{
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(23.dp))
+            .background(Color.White)
+            .padding(12.dp)
+        ,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ){
+        Box(modifier = Modifier
+            .size(67.dp)
+            .clip(RoundedCornerShape(15.dp))
+            .shimmerEffect()
+        )
+        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(.3f)
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .shimmerEffect()
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(.15f)
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .shimmerEffect()
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(.9f)
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(5.dp))
+                    .shimmerEffect()
+            )
+        }
+        Box(
+            modifier = Modifier
+                .size(20.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .shimmerEffect()
         )
     }
 }
