@@ -35,7 +35,7 @@ import com.example.Doctor.data.local.doctors.PediatriciansList
 import com.example.Doctor.data.local.doctors.PsychiatristsList
 import com.example.Doctor.data.local.doctors.PsychologistsList
 import com.example.Doctor.data.local.doctors.RheumatologistsList
-import com.example.Doctor.domain.local.db.bookmarkedDRs
+import com.example.Doctor.presentation.ArticlePage.articlePage
 import com.example.Doctor.presentation.EmailCreatedScreen.createdEmailScreen
 import com.example.Doctor.presentation.ForgotPassword.forgotPasswordScreen
 import com.example.Doctor.presentation.HomeScreen.DoctorInfo
@@ -43,11 +43,13 @@ import com.example.Doctor.presentation.HomeScreen.aboutDoctor
 import com.example.Doctor.presentation.HomeScreen.doctorsPage
 import com.example.Doctor.presentation.HomeScreen.getTopRated
 import com.example.Doctor.presentation.HomeScreen.homeScreen
-import com.example.Doctor.presentation.HomeScreen.savedDoctorsPage
+import com.example.Doctor.presentation.SavedDoctorPage.savedDoctorsPage
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.GoogleAuthUiClient
 import com.example.Doctor.presentation.SignInScreen.GoogleAuth.SignInViewModel
 import com.example.Doctor.presentation.SignInScreen.signInScreen
 import com.example.Doctor.presentation.SignUpScreen.signUpScreen
+import com.example.Doctor.presentation.ViewModels.BookViewModel
+import com.example.Doctor.presentation.ViewModels.sharedDataViewModel
 import com.example.Doctor.presentation.onBOardingScreen.OnBoardingScreen
 import com.example.Doctor.presentation.onBOardingScreen.onBoardingViewModel
 import kotlinx.coroutines.launch
@@ -62,6 +64,8 @@ fun NavGraph(
     context: Context
 ){
     val navController = rememberNavController()
+    val sharedDataViewModel : sharedDataViewModel = viewModel()
+    val bookViewModel : BookViewModel = hiltViewModel()
      NavHost(navController = navController, startDestination = startDestination) {
          navigation(route = Routes.App_OnBoard.route, startDestination =Routes.BoardingScreen.route ){
              composable(route = Routes.BoardingScreen.route){
@@ -150,7 +154,9 @@ fun NavGraph(
                              ).show()
 
                          }
-                     }
+                     },
+                     sharedDataViewModel = sharedDataViewModel,
+                     bookViewModel = bookViewModel
                  )
 
              }
@@ -193,8 +199,8 @@ fun NavGraph(
              composable(route = Routes.AllDoctorsScreen.route){
                  doctorsPage(doctors = AllDoctorsList, navController = navController)
              }
-             composable(route = Routes.savedDocotrsScreen.route){
-                 savedDoctorsPage(doctors = listOf<bookmarkedDRs>() , navController = navController)
+             composable(route = Routes.articleScreen.route){
+                 articlePage(navController = navController, sharedDataViewModel = sharedDataViewModel)
              }
              composable(
                  route = Routes.AboutDoctor.route + "/{name}/{job}/{stars}/{reviews}/{exp}/{about}/{img}/{address}",
@@ -218,11 +224,12 @@ fun NavGraph(
                  val img = entry.arguments?.getInt("img")
                  val address = entry.arguments?.getString("address")
                  val info = DoctorInfo(name ?: "", job ?: "",stars ?: 0,reviews ?: 0,exp ?: 0,about ?: "",img ?: 0,address ?: "")
-                 aboutDoctor(navController = navController, info = info)
+                 aboutDoctor(navController = navController, info = info,bookViewModel = bookViewModel)
              }
              composable(route = Routes.AllTopRatedDoctorsScreen.route){
                  doctorsPage(doctors = getTopRated(AllDoctorsList),navController = navController)
              }
+
          }
      }
 }

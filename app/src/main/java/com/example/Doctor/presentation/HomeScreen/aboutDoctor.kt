@@ -38,6 +38,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -55,15 +56,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.Doctor.R
 import com.example.Doctor.domain.local.db.bookmarkedDRs
 
 import com.example.Doctor.presentation.HomeScreen.calender.CalendarApp
+import com.example.Doctor.presentation.NavGraph.Routes
 import com.example.Doctor.presentation.ViewModels.BookViewModel
 import com.example.Doctor.presentation.ViewModels.BookingEvents
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -83,8 +86,9 @@ fun aboutDoctor(
         R.drawable.doc, "Cairo"
     ),
     navController: NavHostController = rememberNavController(),
+    bookViewModel: BookViewModel = hiltViewModel(),
 
-) {
+    ) {
     val booked_info = bookmarkedDRs(
         info.name,
         info.job,
@@ -117,16 +121,17 @@ fun aboutDoctor(
                     containerColor = colorResource(id = R.color.splashBackgroundTr)
                 ),
                 actions = {
-                    val bookViewModel : BookViewModel = hiltViewModel()
-                    val bookedList = bookViewModel.bookedList.collectAsState()
-                    if (filterBooking(bookedList.value,booked_info).isNotEmpty()){
+                    val bookModel = bookViewModel
+                    val bookedList = bookModel.filtered_list.collectAsState()
+                    if (filterBooking(bookedList.value!!,booked_info).isNotEmpty()){
                             Icon(
                                 modifier = Modifier
                                     .padding(end = 20.dp)
-                                    .size(35.dp).clickable {
-                                        bookViewModel.onBookingEvent(
+                                    .size(35.dp)
+                                    .clickable {
+                                        bookModel.onBookingEvent(
                                             BookingEvents.cancelBookingDR(
-                                                filterBooking(bookedList.value,booked_info)[0]
+                                                filterBooking(bookedList.value!!, booked_info)[0]
                                             )
                                         )
                                     },
@@ -138,8 +143,9 @@ fun aboutDoctor(
                         Icon(
                             modifier = Modifier
                                 .padding(end = 20.dp)
-                                .size(35.dp).clickable {
-                                    bookViewModel.onBookingEvent(
+                                .size(35.dp)
+                                .clickable {
+                                    bookModel.onBookingEvent(
                                         BookingEvents.bookDR(
                                             booked_info
                                         )

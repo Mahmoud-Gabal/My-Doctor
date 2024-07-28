@@ -1,5 +1,7 @@
 package com.example.Doctor.domain.local.db
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -7,6 +9,7 @@ import androidx.room.Query
 import androidx.room.Upsert
 import com.example.Doctor.presentation.HomeScreen.DoctorInfo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Dao
 interface DoctorDao {
@@ -41,7 +44,7 @@ interface DoctorDao {
     suspend fun deleteBookmarkDr(bookmarkedDRs: bookmarkedDRs)
 
     @Query("SELECT * FROM bookmarkedDRs ORDER BY `key` DESC")
-    fun getAllBookemarkDrs() : Flow<List<bookmarkedDRs>>
+    fun getAllBookemarkDrs() : Flow<List<bookmarkedDRs>?>
 
     @Query("SELECT * FROM bookmarkedDRs WHERE name = :name AND address = :address")
     fun getBookmarkDRsFromNameAndAddress(name: String,address: String) : Flow<List<bookmarkedDRs>>

@@ -26,7 +26,7 @@ fun topDoctors(
             .fillMaxWidth()
             .padding(top = 15.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
-        contentPadding = PaddingValues(vertical = 10.dp)
+        contentPadding = PaddingValues(top = 10.dp, bottom = 70.dp)
     ){
         items(topRated){ doctorInfo ->
             doctorCard(info = doctorInfo , navController = navController)

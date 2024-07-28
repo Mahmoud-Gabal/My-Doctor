@@ -35,6 +35,6 @@ sealed class Routes(
     object AllDoctorsScreen  :Routes("AllDoctors")
     object AboutDoctor  :Routes("aboutDoctor")
     object AllTopRatedDoctorsScreen : Routes("AllTopRatedDoctors")
-    object savedDocotrsScreen : Routes("saved_Docotrs")
+    object articleScreen : Routes("articleScreen")
 
 }
